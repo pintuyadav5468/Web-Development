@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Navbar Showcase</title>
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Space+Mono:wght@400;700&display=swap"
+                        rel="stylesheet">
+            <style>
+                        :root {
+                                    --ink: #1a1410;
+                                    --paper: #f4ede2;
+                                    --paper-2: #ece2d3;
+                                    --accent: #d4471f;
+                                    --accent-2: #e8a23d;
+                                    --line: #cdbda6;
+                                    --shadow: rgba(26, 20, 16, 0.18);
+                        }
+
+                        * {
+                                    box-sizing: border-box;
+                        }
+
+                        body {
+                                    font-family: "Space Mono", monospace;
+                                    background-color: var(--paper);
+                                    background-image:
+                                                radial-gradient(circle at 12% 18%, rgba(212, 71, 31, 0.06), transparent 40%),
+                                                radial-gradient(circle at 88% 82%, rgba(232, 162, 61, 0.08), transparent 45%);
+                                    color: var(--ink);
+                                    margin: 0;
+                                    padding: 56px clamp(20px, 6vw, 96px) 80px;
+                                    min-height: 100vh;
+                        }
+
+                        .page-title {
+                                    font-family: "Fraunces", serif;
+                                    font-weight: 900;
+                                    font-size: clamp(2.2rem, 6vw, 4rem);
+                                    line-height: 0.95;
+                                    margin: 0 0 8px;
+                                    letter-spacing: -0.02em;
+                        }
+
+                        .page-title em {
+                                    font-style: italic;
+                                    color: var(--accent);
+                        }
+
+                        .page-sub {
+                                    font-size: 0.8rem;
+                                    letter-spacing: 0.25em;
+                                    text-transform: uppercase;
+                                    color: #8c7c66;
+                                    margin: 0 0 56px;
+                        }
+
+                        section {
+                                    background: var(--paper-2);
+                                    border: 1.5px solid var(--line);
+                                    border-radius: 14px;
+                                    padding: 28px 32px;
+                                    margin-bottom: 32px;
+                                    box-shadow: 6px 6px 0 var(--shadow);
+                                    position: relative;
+                        }
+
+                        section h2 {
+                                    font-family: "Fraunces", serif;
+                                    font-weight: 600;
+                                    font-size: 1.35rem;
+                                    margin: 0 0 22px;
+                                    color: var(--ink);
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 12px;
+                        }
+
+                        section h2::before {
+                                    content: "";
+                                    width: 14px;
+                                    height: 14px;
+                                    background: var(--accent);
+                                    border-radius: 4px;
+                                    transform: rotate(45deg);
+                                    flex: none;
+                        }
+
+                        ul {
+                                    list-style: none;
+                                    padding: 0;
+                                    margin: 0;
+                        }
+
+                        a {
+                                    text-decoration: none;
+                                    color: var(--ink);
+                                    font-weight: 700;
+                                    font-size: 0.95rem;
+                        }
+
+                        /* ---- Horizontal underline navbar ---- */
+                        .nav-underline {
+                                    display: flex;
+                                    flex-wrap: wrap;
+                                    gap: 36px;
+                        }
+
+                        .nav-underline a {
+                                    position: relative;
+                                    padding-bottom: 6px;
+                                    transition: color 0.25s ease;
+                        }
+
+                        .nav-underline a::after {
+                                    content: "";
+                                    position: absolute;
+                                    left: 0;
+                                    bottom: 0;
+                                    width: 100%;
+                                    height: 2.5px;
+                                    background: var(--accent);
+                                    transform: scaleX(0);
+                                    transform-origin: left;
+                                    transition: transform 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+                        }
+
+                        .nav-underline a:hover {
+                                    color: var(--accent);
+                        }
+
+                        .nav-underline a:hover::after {
+                                    transform: scaleX(1);
+                        }
+
+                        /* ---- Vertical navbar ---- */
+                        .nav-vertical {
+                                    max-width: 260px;
+                        }
+
+                        .nav-vertical li {
+                                    margin-bottom: 6px;
+                        }
+
+                        .nav-vertical a {
+                                    display: block;
+                                    padding: 12px 18px;
+                                    border-radius: 9px;
+                                    border-left: 3px solid transparent;
+                                    transition: all 0.25s ease;
+                        }
+
+                        .nav-vertical a:hover {
+                                    background: var(--paper);
+                                    border-left-color: var(--accent);
+                                    padding-left: 26px;
+                                    color: var(--accent);
+                        }
+
+                        /* ---- Horizontal dropdown navbar ---- */
+                        .nav-dropdown {
+                                    display: flex;
+                                    flex-wrap: wrap;
+                                    gap: 8px;
+                        }
+
+                        .nav-dropdown>li {
+                                    position: relative;
+                        }
+
+                        .nav-dropdown>li>a {
+                                    display: block;
+                                    padding: 12px 20px;
+                                    border-radius: 9px;
+                                    transition: all 0.25s ease;
+                        }
+
+                        .nav-dropdown>li>a:hover {
+                                    background: var(--ink);
+                                    color: var(--paper);
+                        }
+
+                        .nav-dropdown .has-sub>a::after {
+                                    content: " ▾";
+                                    color: var(--accent-2);
+                        }
+
+                        .nav-dropdown .submenu {
+                                    position: absolute;
+                                    top: calc(100% + 8px);
+                                    left: 0;
+                                    min-width: 190px;
+                                    background: var(--ink);
+                                    border-radius: 11px;
+                                    padding: 8px;
+                                    box-shadow: 0 16px 36px rgba(26, 20, 16, 0.32);
+                                    opacity: 0;
+                                    visibility: hidden;
+                                    transform: translateY(-8px);
+                                    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+                                    z-index: 10;
+                        }
+
+                        .nav-dropdown .has-sub:hover .submenu {
+                                    opacity: 1;
+                                    visibility: visible;
+                                    transform: translateY(0);
+                        }
+
+                        .nav-dropdown .submenu a {
+                                    display: block;
+                                    color: var(--paper);
+                                    padding: 11px 14px;
+                                    border-radius: 7px;
+                                    font-weight: 400;
+                                    transition: all 0.2s ease;
+                        }
+
+                        .nav-dropdown .submenu a:hover {
+                                    background: var(--accent);
+                                    padding-left: 20px;
+                        }
+
+                        .note {
+                                    font-size: 0.78rem;
+                                    color: #8c7c66;
+                                    letter-spacing: 0.04em;
+                                    margin-top: 32px;
+                        }
+
+                        .note code {
+                                    background: var(--paper-2);
+                                    padding: 2px 7px;
+                                    border-radius: 5px;
+                                    color: var(--accent);
+                        }
+            </style>
+</head>
+
+<body>
+            <h1 class="page-title">Navbar <em>Showcase</em></h1>
+            <p class="page-sub">Three patterns · one cohesive style</p>
+
+            <section>
+                        <h2>Horizontal Navbar — underline sweep</h2>
+                        <ul class="nav-underline">
+                                    <li><a href="#home">Home</a></li>
+                                    <li><a href="#news">News</a></li>
+                                    <li><a href="#contact">Contact</a></li>
+                                    <li><a href="#about">About</a></li>
+                        </ul>
+            </section>
+
+            <section>
+                        <h2>Vertical Navbar — slide hover</h2>
+                        <ul class="nav-vertical">
+                                    <li><a href="#home">Home</a></li>
+                                    <li><a href="#news">News</a></li>
+                                    <li><a href="#contact">Contact</a></li>
+                                    <li><a href="#about">About</a></li>
+                        </ul>
+            </section>
+
+            <section>
+                        <h2>Horizontal Navbar — with dropdown</h2>
+                        <ul class="nav-dropdown">
+                                    <li><a href="#home">Home</a></li>
+                                    <li><a href="#news">News</a></li>
+                                    <li><a href="#contact">Contact</a></li>
+                                    <li><a href="#about">About</a></li>
+                                    <li class="has-sub">
+                                                <a href="#services">Services</a>
+                                                <ul class="submenu">
+                                                            <li><a href="#webdesign">Web Design</a></li>
+                                                            <li><a href="#seo">SEO</a></li>
+                                                            <li><a href="#marketing">Marketing</a></li>
+                                                </ul>
+                                    </li>
+                        </ul>
+            </section>
+
+            <p class="note">Note: links use <code>href="#"</code>. In a real site these would be URLs.</p>
+</body>
+
+</html>
+
