@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>CSS Flexbox Complete Reference</title>
+            <style>
+                        /* ── RESET & BASE ── */
+                        *,
+                        *::before,
+                        *::after {
+                                    box-sizing: border-box;
+                                    margin: 0;
+                                    padding: 0;
+                        }
+
+                        body {
+                                    font-family: 'Segoe UI', system-ui, sans-serif;
+                                    background: #0f1117;
+                                    color: #e2e8f0;
+                                    line-height: 1.6;
+                        }
+
+                        /* ── HERO HEADER ── */
+                        header {
+                                    background: linear-gradient(135deg, #1a1f2e 0%, #16213e 50%, #0f3460 100%);
+                                    padding: 60px 40px;
+                                    text-align: center;
+                                    border-bottom: 1px solid #2d3748;
+                        }
+
+                        header h1 {
+                                    font-size: 2.8rem;
+                                    font-weight: 700;
+                                    background: linear-gradient(90deg, #63b3ed, #9f7aea, #fc8181);
+                                    -webkit-background-clip: text;
+                                    -webkit-text-fill-color: transparent;
+                                    background-clip: text;
+                                    margin-bottom: 12px;
+                        }
+
+                        header p {
+                                    color: #a0aec0;
+                                    font-size: 1.1rem;
+                        }
+
+                        .badge-row {
+                                    display: flex;
+                                    justify-content: center;
+                                    gap: 12px;
+                                    margin-top: 20px;
+                                    flex-wrap: wrap;
+                        }
+
+                        .badge {
+                                    padding: 4px 14px;
+                                    border-radius: 999px;
+                                    font-size: 0.78rem;
+                                    font-weight: 600;
+                                    letter-spacing: 0.05em;
+                        }
+
+                        .badge-blue {
+                                    background: #1a3a5c;
+                                    color: #63b3ed;
+                                    border: 1px solid #2b6cb0;
+                        }
+
+                        .badge-purple {
+                                    background: #2d1f4e;
+                                    color: #b794f4;
+                                    border: 1px solid #6b46c1;
+                        }
+
+                        .badge-green {
+                                    background: #1a3a2a;
+                                    color: #68d391;
+                                    border: 1px solid #276749;
+                        }
+
+                        /* ── NAVIGATION ── */
+                        nav {
+                                    position: sticky;
+                                    top: 0;
+                                    z-index: 100;
+                                    background: #141820;
+                                    border-bottom: 1px solid #2d3748;
+                                    padding: 0 40px;
+                                    display: flex;
+                                    gap: 4px;
+                                    overflow-x: auto;
+                        }
+
+                        nav a {
+                                    color: #a0aec0;
+                                    text-decoration: none;
+                                    font-size: 0.85rem;
+                                    font-weight: 500;
+                                    padding: 14px 16px;
+                                    white-space: nowrap;
+                                    border-bottom: 2px solid transparent;
+                                    transition: all 0.2s;
+                        }
+
+                        nav a:hover {
+                                    color: #63b3ed;
+                                    border-bottom-color: #63b3ed;
+                        }
+
+                        /* ── MAIN LAYOUT ── */
+                        main {
+                                    max-width: 1200px;
+                                    margin: 0 auto;
+                                    padding: 40px 24px;
+                                    display: flex;
+                                    flex-direction: column;
+                                    gap: 60px;
+                        }
+
+                        /* ── SECTION ── */
+                        section {
+                                    scroll-margin-top: 60px;
+                        }
+
+                        .section-header {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 14px;
+                                    margin-bottom: 24px;
+                                    padding-bottom: 14px;
+                                    border-bottom: 1px solid #2d3748;
+                        }
+
+                        .section-num {
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    width: 36px;
+                                    height: 36px;
+                                    background: #1a3a5c;
+                                    color: #63b3ed;
+                                    border: 1px solid #2b6cb0;
+                                    border-radius: 8px;
+                                    font-weight: 700;
+                                    font-size: 0.9rem;
+                                    flex-shrink: 0;
+                        }
+
+                        .section-title {
+                                    font-size: 1.3rem;
+                                    font-weight: 600;
+                                    color: #e2e8f0;
+                        }
+
+                        .section-desc {
+                                    font-size: 0.85rem;
+                                    color: #718096;
+                                    margin-top: 2px;
+                        }
+
+                        /* ── CARD GRID ── */
+                        .card-grid {
+                                    display: flex;
+                                    flex-wrap: wrap;
+                                    gap: 16px;
+                        }
+
+                        .card {
+                                    background: #1a1f2e;
+                                    border: 1px solid #2d3748;
+                                    border-radius: 12px;
+                                    padding: 20px;
+                                    flex: 1 1 280px;
+                                    transition: border-color 0.2s, transform 0.2s;
+                        }
+
+                        .card:hover {
+                                    border-color: #4a5568;
+                                    transform: translateY(-2px);
+                        }
+
+                        .card-head {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 10px;
+                                    margin-bottom: 14px;
+                        }
+
+                        .card-icon {
+                                    width: 32px;
+                                    height: 32px;
+                                    border-radius: 8px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    font-size: 1rem;
+                                    flex-shrink: 0;
+                        }
+
+                        .icon-blue {
+                                    background: #1a3a5c;
+                        }
+
+                        .icon-purple {
+                                    background: #2d1f4e;
+                        }
+
+                        .icon-green {
+                                    background: #1a3a2a;
+                        }
+
+                        .icon-amber {
+                                    background: #3a2a0a;
+                        }
+
+                        .card-name {
+                                    font-family: 'Courier New', monospace;
+                                    font-size: 0.95rem;
+                                    font-weight: 600;
+                                    color: #63b3ed;
+                        }
+
+                        .card-desc {
+                                    font-size: 0.82rem;
+                                    color: #718096;
+                                    margin-bottom: 14px;
+                        }
+
+                        /* ── VALUE PILLS ── */
+                        .values {
+                                    display: flex;
+                                    flex-wrap: wrap;
+                                    gap: 6px;
+                        }
+
+                        .val {
+                                    font-family: 'Courier New', monospace;
+                                    font-size: 0.75rem;
+                                    padding: 3px 10px;
+                                    border-radius: 6px;
+                                    border: 1px solid #2d3748;
+                                    background: #0f1117;
+                                    color: #a0aec0;
+                                    cursor: default;
+                                    transition: background 0.15s;
+                        }
+
+                        .val:hover {
+                                    background: #1a1f2e;
+                                    color: #e2e8f0;
+                        }
+
+                        .val.default {
+                                    border-color: #2b6cb0;
+                                    color: #63b3ed;
+                                    background: #1a3a5c22;
+                        }
+
+                        /* ── CODE BLOCK ── */
+                        .code-wrap {
+                                    background: #0d1117;
+                                    border: 1px solid #2d3748;
+                                    border-radius: 12px;
+                                    overflow: hidden;
+                        }
+
+                        .code-bar {
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    padding: 10px 16px;
+                                    background: #161b22;
+                                    border-bottom: 1px solid #2d3748;
+                        }
+
+                        .code-bar span {
+                                    font-size: 0.78rem;
+                                    color: #718096;
+                                    font-family: monospace;
+                        }
+
+                        .copy-btn {
+                                    background: #21262d;
+                                    color: #c9d1d9;
+                                    border: 1px solid #30363d;
+                                    padding: 4px 12px;
+                                    border-radius: 6px;
+                                    font-size: 0.75rem;
+                                    cursor: pointer;
+                                    transition: background 0.15s;
+                        }
+
+                        .copy-btn:hover {
+                                    background: #30363d;
+                        }
+
+                        pre {
+                                    padding: 20px;
+                                    overflow-x: auto;
+                                    font-size: 0.82rem;
+                                    line-height: 1.7;
+                        }
+
+                        code {
+                                    font-family: 'Courier New', Courier, monospace;
+                                    color: #c9d1d9;
+                        }
+
+                        .kw {
+                                    color: #ff7b72;
+                        }
+
+                        /* keywords / properties */
+                        .val-c {
+                                    color: #79c0ff;
+                        }
+
+                        /* values */
+                        .cm {
+                                    color: #8b949e;
+                        }
+
+                        /* comments */
+                        .sel {
+                                    color: #7ee787;
+                        }
+
+                        /* selectors */
+                        .num-c {
+                                    color: #f2cc60;
+                        }
+
+                        /* numbers */
+
+                        /* ── DEMO SECTION ── */
+                        .demo-wrap {
+                                    background: #1a1f2e;
+                                    border: 1px solid #2d3748;
+                                    border-radius: 12px;
+                                    overflow: hidden;
+                        }
+
+                        .demo-tabs {
+                                    display: flex;
+                                    border-bottom: 1px solid #2d3748;
+                                    overflow-x: auto;
+                        }
+
+                        .demo-tab {
+                                    padding: 10px 20px;
+                                    font-size: 0.82rem;
+                                    font-weight: 500;
+                                    color: #718096;
+                                    cursor: pointer;
+                                    border-bottom: 2px solid transparent;
+                                    white-space: nowrap;
+                                    background: none;
+                                    border-top: none;
+                                    border-left: none;
+                                    border-right: none;
+                                    transition: all 0.2s;
+                        }
+
+                        .demo-tab.active {
+                                    color: #63b3ed;
+                                    border-bottom-color: #63b3ed;
+                                    background: #0f1117;
+                        }
+
+                        .demo-tab:hover {
+                                    color: #a0aec0;
+                        }
+
+                        .demo-panels {
+                                    padding: 24px;
+                        }
+
+                        .demo-panel {
+                                    display: none;
+                        }
+
+                        .demo-panel.active {
+                                    display: block;
+                        }
+
+                        .demo-label {
+                                    font-size: 0.75rem;
+                                    color: #718096;
+                                    font-family: monospace;
+                                    margin-bottom: 10px;
+                        }
+
+                        .demo-box {
+                                    background: #0f1117;
+                                    border: 1px dashed #2d3748;
+                                    border-radius: 8px;
+                                    padding: 16px;
+                                    min-height: 90px;
+                        }
+
+                        .demo-item {
+                                    background: linear-gradient(135deg, #1a3a5c, #2d1f4e);
+                                    border: 1px solid #2b6cb0;
+                                    border-radius: 6px;
+                                    padding: 10px 16px;
+                                    font-size: 0.8rem;
+                                    color: #63b3ed;
+                                    font-family: monospace;
+                        }
+
+                        /* ── PATTERN CARDS ── */
+                        .pattern-grid {
+                                    display: flex;
+                                    flex-wrap: wrap;
+                                    gap: 20px;
+                        }
+
+                        .pattern-card {
+                                    background: #1a1f2e;
+                                    border: 1px solid #2d3748;
+                                    border-radius: 12px;
+                                    overflow: hidden;
+                                    flex: 1 1 320px;
+                        }
+
+                        .pattern-preview {
+                                    height: 120px;
+                                    background: #0f1117;
+                                    border-bottom: 1px solid #2d3748;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    padding: 16px;
+                        }
+
+                        .pattern-body {
+                                    padding: 16px;
+                        }
+
+                        .pattern-name {
+                                    font-size: 0.95rem;
+                                    font-weight: 600;
+                                    color: #e2e8f0;
+                                    margin-bottom: 4px;
+                        }
+
+                        .pattern-desc {
+                                    font-size: 0.8rem;
+                                    color: #718096;
+                        }
+
+                        .p-item {
+                                    background: #1a3a5c;
+                                    border: 1px solid #2b6cb0;
+                                    border-radius: 4px;
+                                    font-size: 0.7rem;
+                                    color: #63b3ed;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                        }
+
+                        /* ── CHEAT SHEET TABLE ── */
+                        .table-wrap {
+                                    overflow-x: auto;
+                        }
+
+                        table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    font-size: 0.83rem;
+                        }
+
+                        thead tr {
+                                    background: #161b22;
+                        }
+
+                        th {
+                                    padding: 12px 16px;
+                                    text-align: left;
+                                    color: #a0aec0;
+                                    font-weight: 600;
+                                    border-bottom: 1px solid #2d3748;
+                                    white-space: nowrap;
+                        }
+
+                        td {
+                                    padding: 11px 16px;
+                                    border-bottom: 1px solid #1a1f2e;
+                                    vertical-align: top;
+                        }
+
+                        tr:hover td {
+                                    background: #1a1f2e;
+                        }
+
+                        .prop-cell {
+                                    font-family: monospace;
+                                    color: #63b3ed;
+                        }
+
+                        .axis-main {
+                                    color: #fc8181;
+                                    font-size: 0.75rem;
+                                    font-weight: 600;
+                        }
+
+                        .axis-cross {
+                                    color: #b794f4;
+                                    font-size: 0.75rem;
+                                    font-weight: 600;
+                        }
+
+                        .axis-item {
+                                    color: #68d391;
+                                    font-size: 0.75rem;
+                                    font-weight: 600;
+                        }
+
+                        .axis-parent {
+                                    color: #f6ad55;
+                                    font-size: 0.75rem;
+                                    font-weight: 600;
+                        }
+
+                        /* ── FOOTER ── */
+                        footer {
+                                    text-align: center;
+                                    padding: 40px 24px;
+                                    color: #4a5568;
+                                    font-size: 0.82rem;
+                                    border-top: 1px solid #2d3748;
+                        }
+
+                        /* ── SCROLLBAR ── */
+                        ::-webkit-scrollbar {
+                                    width: 6px;
+                                    height: 6px;
+                        }
+
+                        ::-webkit-scrollbar-track {
+                                    background: #0f1117;
+                        }
+
+                        ::-webkit-scrollbar-thumb {
+                                    background: #2d3748;
+                                    border-radius: 3px;
+                        }
+            </style>
+</head>
+
+<body>
+
+            <!-- ══════════════════════════════════════
+     HEADER
+══════════════════════════════════════ -->
+            <header>
+                        <h1>CSS Flexbox</h1>
+                        <p>Complete Property Reference — All values, demos & patterns</p>
+                        <div class="badge-row">
+                                    <span class="badge badge-blue">8 Parent Properties</span>
+                                    <span class="badge badge-purple">6 Child Properties</span>
+                                    <span class="badge badge-green">15 Real-world Patterns</span>
+                        </div>
+            </header>
+
+            <!-- ══════════════════════════════════════
+     NAVIGATION
+══════════════════════════════════════ -->
+            <nav>
+                        <a href="#parent">Parent Props</a>
+                        <a href="#child">Child Props</a>
+                        <a href="#demos">Live Demos</a>
+                        <a href="#patterns">Patterns</a>
+                        <a href="#cheatsheet">Cheat Sheet</a>
+                        <a href="#fullcode">Full Code</a>
+            </nav>
+
+            <main>
+
+                        <!-- ══════════════════════════════════════
+       PARENT PROPERTIES
+  ══════════════════════════════════════ -->
+                        <section id="parent">
+                                    <div class="section-header">
+                                                <div class="section-num">P</div>
+                                                <div>
+                                                            <div class="section-title">Parent (Container) Properties
+                                                            </div>
+                                                            <div class="section-desc">Applied on the flex container
+                                                                        element</div>
+                                                </div>
+                                    </div>
+
+                                    <div class="card-grid">
+
+                                                <div class="card">
+                                                            <div class="card-head">
+                                                                        <div class="card-icon icon-blue">🖥</div>
+                                                                        <span class="card-name">[1] display</span>
+                                                            </div>
+                                                            <div class="card-desc">Activates flexbox on the container
+                                                                        element.</div>
+                                                            <div class="values">
+                                                                        <span class="val default">flex</span>
+                                                                        <span class="val">inline-flex</span>
+                                                            </div>
+                                                </div>
+
+                                                <div class="card">
+                                                            <div class="card-head">
+                                                                        <div class="card-icon icon-blue">→</div>
+                                                                        <span class="card-name">[2]
+                                                                                    flex-direction</span>
+                                                            </div>
+                                                            <div class="card-desc">Sets the main axis — the direction
+                                                                        items flow.</div>
+                                                            <div class="values">
+                                                                        <span class="val default">row</span>
+                                                                        <span class="val">row-reverse</span>
+                                                                        <span class="val">column</span>
+                                                                        <span class="val">column-reverse</span>
+                                                            </div>
+                                                </div>
+
+                                                <div class="card">
+                                                            <div class="card-head">
+                                                                        <div class="card-icon icon-purple">↩</div>
+                                                                        <span class="card-name">[3] flex-wrap</span>
+                                                            </div>
+                                                            <div class="card-desc">Controls whether items wrap to new
+                                                                        lines.</div>
+                                                            <div class="values">
+                                                                        <span class="val default">nowrap</span>
+                                                                        <span class="val">wrap</span>
+                                                                        <span class="val">wrap-reverse</span>
+                                                            </div>
+                                                </div>
+
+                                                <div class="card">
+                                                            <div class="card-head">
+                                                                        <div class="card-icon icon-purple">⚡</div>
+                                                                        <span class="card-name">[4] flex-flow</span>
+                                                            </div>
+                                                            <div class="card-desc">Shorthand for flex-direction +
+                                                                        flex-wrap combined.</div>
+                                                            <div class="values">
+                                                                        <span class="val default">row nowrap</span>
+                                                                        <span class="val">row wrap</span>
+                                                                        <span class="val">column wrap</span>
+                                                                        <span class="val">column-reverse wrap</span>
+                                                            </div>
+                                                </div>
+
+                                                <div class="card">
+                                                            <div class="card-head">
+                                                                        <div class="card-icon icon-green">⟺</div>
+                                                                        <span class="card-name">[5]
+                                                                                    justify-content</span>
+                                                            </div>
+                                                            <div class="card-desc">Aligns items along the <strong>main
+                                                                                    axis</strong>.</div>
+                                                            <div class="values">
+                                                                        <span class="val default">flex-start</span>
+                                                                        <span class="val">flex-end</span>
+                                                                        <span class="val">center</span>
+                                                                        <span class="val">space-between</span>
+                                                                        <span class="val">space-around</span>
+                                                                        <span class="val">space-evenly</span>
+                                                            </div>
+                                                </div>
+
+                                                <div class="card">
+                                                            <div class="card-head">
+                                                                        <div class="card-icon icon-green">⟸</div>
+                                                                        <span class="card-name">[6] align-items</span>
+                                                            </div>
+                                                            <div class="card-desc">Aligns items along the <strong>cross
+                                                                                    axis</strong> (single line).</div>
+                                                            <div class="values">
+                                                                        <span class="val default">stretch</span>
+                                                                        <span class="val">flex-start</span>
+                                                                        <span class="val">flex-end</span>
+                                                                        <span class="val">center</span>
+                                                                        <span class="val">baseline</span>
+                                                            </div>
+                                                </div>
+
+                                                <div class="card">
+                                                            <div class="card-head">
+                                                                        <div class="card-icon icon-amber">☰</div>
+                                                                        <span class="card-name">[7] align-content</span>
+                                                            </div>
+                                                            <div class="card-desc">Aligns multiple lines along the
+                                                                        <strong>cross axis</strong>.</div>
+                                                            <div class="values">
+                                                                        <span class="val default">normal</span>
+                                                                        <span class="val">flex-start</span>
+                                                                        <span class="val">flex-end</span>
+                                                                        <span class="val">center</span>
+                                                                        <span class="val">space-between</span>
+                                                                        <span class="val">space-around</span>
+                                                                        <span class="val">stretch</span>
+                                                            </div>
+                                                </div>
+
+                                                <div class="card">
+                                                            <div class="card-head">
+                                                                        <div class="card-icon icon-amber">⊞</div>
+                                                                        <span class="card-name">[8] gap</span>
+                                                            </div>
+                                                            <div class="card-desc">Sets spacing between items (not on
+                                                                        outer edges).</div>
+                                                            <div class="values">
+                                                                        <span class="val default">0</span>
+                                                                        <span class="val">16px</span>
+                                                                        <span class="val">20px 10px</span>
+                                                                        <span class="val">row-gap</span>
+                                                                        <span class="val">column-gap</span>
+                                                            </div>
+                                                </div>
+
+                                    </div>
+                        </section>
+
+                        <!-- ══════════════════════════════════════
+       CHILD PROPERTIES
+  ══════════════════════════════════════ -->
+                        <section id="child">
+                                    <div class="section-header">
+                                                <div class="section-num">C</div>
+                                                <div>
+                                                            <div class="section-title">Child (Item) Properties</div>
+                                                            <div class="section-desc">Applied on individual flex items
+                                                            </div>
+                                                </div>
+                                    </div>
+
+                                    <div class="card-grid">
+
+                                                <div class="card">
+                                                            <div class="card-head">
+                                                                        <div class="card-icon icon-purple">①</div>
+                                                                        <span class="card-name">[1] order</span>
+                                                            </div>
+                                                            <div class="card-desc">Controls the visual display order of
+                                                                        items.</div>
+                                                            <div class="values">
+                                                                        <span class="val default">0</span>
+                                                                        <span class="val">-1</span>
+                                                                        <span class="val">1</span>
+                                                                        <span class="val">2</span>
+                                                                        <span class="val">any integer</span>
+                                                            </div>
+                                                </div>
+
+                                                <div class="card">
+                                                            <div class="card-head">
+                                                                        <div class="card-icon icon-green">↔</div>
+                                                                        <span class="card-name">[2] flex-grow</span>
+                                                            </div>
+                                                            <div class="card-desc">How much the item grows to fill free
+                                                                        space.</div>
+                                                            <div class="values">
+                                                                        <span class="val default">0</span>
+                                                                        <span class="val">1</span>
+                                                                        <span class="val">2</span>
+                                                                        <span class="val">0.5</span>
+                                                            </div>
+                                                </div>
+
+                                                <div class="card">
+                                                            <div class="card-head">
+                                                                        <div class="card-icon icon-blue">↔</div>
+                                                                        <span class="card-name">[3] flex-shrink</span>
+                                                            </div>
+                                                            <div class="card-desc">How much the item shrinks when space
+                                                                        is tight.</div>
+                                                            <div class="values">
+                                                                        <span class="val default">1</span>
+                                                                        <span class="val">0</span>
+                                                                        <span class="val">2</span>
+                                                                        <span class="val">0.5</span>
+                                                            </div>
+                                                </div>
+
+                                                <div class="card">
+                                                            <div class="card-head">
+                                                                        <div class="card-icon icon-amber">📐</div>
+                                                                        <span class="card-name">[4] flex-basis</span>
+                                                            </div>
+                                                            <div class="card-desc">Initial size before growing or
+                                                                        shrinking.</div>
+                                                            <div class="values">
+                                                                        <span class="val default">auto</span>
+                                                                        <span class="val">0</span>
+                                                                        <span class="val">200px</span>
+                                                                        <span class="val">50%</span>
+                                                                        <span class="val">content</span>
+                                                            </div>
+                                                </div>
+
+                                                <div class="card">
+                                                            <div class="card-head">
+                                                                        <div class="card-icon icon-purple">⚡</div>
+                                                                        <span class="card-name">[5] flex</span>
+                                                            </div>
+                                                            <div class="card-desc">Shorthand: flex-grow + flex-shrink +
+                                                                        flex-basis.</div>
+                                                            <div class="values">
+                                                                        <span class="val default">0 1 auto</span>
+                                                                        <span class="val">1</span>
+                                                                        <span class="val">auto</span>
+                                                                        <span class="val">none</span>
+                                                                        <span class="val">2 1 100px</span>
+                                                            </div>
+                                                </div>
+
+                                                <div class="card">
+                                                            <div class="card-head">
+                                                                        <div class="card-icon icon-green">⟸</div>
+                                                                        <span class="card-name">[6] align-self</span>
+                                                            </div>
+                                                            <div class="card-desc">Overrides align-items for this single
+                                                                        item only.</div>
+                                                            <div class="values">
+                                                                        <span class="val default">auto</span>
+                                                                        <span class="val">flex-start</span>
+                                                                        <span class="val">flex-end</span>
+                                                                        <span class="val">center</span>
+                                                                        <span class="val">baseline</span>
+                                                                        <span class="val">stretch</span>
+                                                            </div>
+                                                </div>
+
+                                    </div>
+                        </section>
+
+                        <!-- ══════════════════════════════════════
+       LIVE DEMOS
+  ══════════════════════════════════════ -->
+                        <section id="demos">
+                                    <div class="section-header">
+                                                <div class="section-num">▶</div>
+                                                <div>
+                                                            <div class="section-title">Live Demos</div>
+                                                            <div class="section-desc">Click tabs to see each property in
+                                                                        action</div>
+                                                </div>
+                                    </div>
+
+                                    <div class="demo-wrap">
+                                                <div class="demo-tabs">
+                                                            <button class="demo-tab active"
+                                                                        onclick="showDemo('jc')">justify-content</button>
+                                                            <button class="demo-tab"
+                                                                        onclick="showDemo('ai')">align-items</button>
+                                                            <button class="demo-tab"
+                                                                        onclick="showDemo('fd')">flex-direction</button>
+                                                            <button class="demo-tab"
+                                                                        onclick="showDemo('fw')">flex-wrap</button>
+                                                            <button class="demo-tab"
+                                                                        onclick="showDemo('fg')">flex-grow</button>
+                                                            <button class="demo-tab"
+                                                                        onclick="showDemo('as')">align-self</button>
+                                                </div>
+                                                <div class="demo-panels">
+
+                                                            <!-- justify-content -->
+                                                            <div id="demo-jc" class="demo-panel active">
+                                                                        <div class="demo-label">justify-content</div>
+                                                                        <div
+                                                                                    style="display:flex;flex-direction:column;gap:10px;">
+                                                                                    <div>
+                                                                                                <div
+                                                                                                            style="font-size:0.7rem;color:#718096;margin-bottom:4px;font-family:monospace;">
+                                                                                                            flex-start
+                                                                                                </div>
+                                                                                                <div class="demo-box"
+                                                                                                            style="display:flex;justify-content:flex-start;gap:8px;align-items:center;">
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        A
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        B
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        C
+                                                                                                            </div>
+                                                                                                </div>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                                <div
+                                                                                                            style="font-size:0.7rem;color:#718096;margin-bottom:4px;font-family:monospace;">
+                                                                                                            center</div>
+                                                                                                <div class="demo-box"
+                                                                                                            style="display:flex;justify-content:center;gap:8px;align-items:center;">
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        A
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        B
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        C
+                                                                                                            </div>
+                                                                                                </div>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                                <div
+                                                                                                            style="font-size:0.7rem;color:#718096;margin-bottom:4px;font-family:monospace;">
+                                                                                                            space-between
+                                                                                                </div>
+                                                                                                <div class="demo-box"
+                                                                                                            style="display:flex;justify-content:space-between;align-items:center;">
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        A
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        B
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        C
+                                                                                                            </div>
+                                                                                                </div>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                                <div
+                                                                                                            style="font-size:0.7rem;color:#718096;margin-bottom:4px;font-family:monospace;">
+                                                                                                            space-evenly
+                                                                                                </div>
+                                                                                                <div class="demo-box"
+                                                                                                            style="display:flex;justify-content:space-evenly;align-items:center;">
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        A
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        B
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        C
+                                                                                                            </div>
+                                                                                                </div>
+                                                                                    </div>
+                                                                        </div>
+                                                            </div>
+
+                                                            <!-- align-items -->
+                                                            <div id="demo-ai" class="demo-panel">
+                                                                        <div class="demo-label">align-items</div>
+                                                                        <div
+                                                                                    style="display:flex;flex-direction:column;gap:10px;">
+                                                                                    <div>
+                                                                                                <div
+                                                                                                            style="font-size:0.7rem;color:#718096;margin-bottom:4px;font-family:monospace;">
+                                                                                                            flex-start
+                                                                                                </div>
+                                                                                                <div class="demo-box"
+                                                                                                            style="display:flex;align-items:flex-start;gap:8px;height:90px;">
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        A
+                                                                                                            </div>
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="padding:20px 16px;">
+                                                                                                                        B
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        C
+                                                                                                            </div>
+                                                                                                </div>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                                <div
+                                                                                                            style="font-size:0.7rem;color:#718096;margin-bottom:4px;font-family:monospace;">
+                                                                                                            center</div>
+                                                                                                <div class="demo-box"
+                                                                                                            style="display:flex;align-items:center;gap:8px;height:90px;">
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        A
+                                                                                                            </div>
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="padding:20px 16px;">
+                                                                                                                        B
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        C
+                                                                                                            </div>
+                                                                                                </div>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                                <div
+                                                                                                            style="font-size:0.7rem;color:#718096;margin-bottom:4px;font-family:monospace;">
+                                                                                                            stretch
+                                                                                                </div>
+                                                                                                <div class="demo-box"
+                                                                                                            style="display:flex;align-items:stretch;gap:8px;height:90px;">
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        A
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        B
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        C
+                                                                                                            </div>
+                                                                                                </div>
+                                                                                    </div>
+                                                                        </div>
+                                                            </div>
+
+                                                            <!-- flex-direction -->
+                                                            <div id="demo-fd" class="demo-panel">
+                                                                        <div class="demo-label">flex-direction</div>
+                                                                        <div
+                                                                                    style="display:flex;gap:16px;flex-wrap:wrap;">
+                                                                                    <div
+                                                                                                style="flex:1;min-width:180px;">
+                                                                                                <div
+                                                                                                            style="font-size:0.7rem;color:#718096;margin-bottom:4px;font-family:monospace;">
+                                                                                                            row
+                                                                                                            (default)
+                                                                                                </div>
+                                                                                                <div class="demo-box"
+                                                                                                            style="display:flex;flex-direction:row;gap:8px;align-items:center;">
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        1
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        2
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        3
+                                                                                                            </div>
+                                                                                                </div>
+                                                                                    </div>
+                                                                                    <div
+                                                                                                style="flex:1;min-width:180px;">
+                                                                                                <div
+                                                                                                            style="font-size:0.7rem;color:#718096;margin-bottom:4px;font-family:monospace;">
+                                                                                                            column</div>
+                                                                                                <div class="demo-box"
+                                                                                                            style="display:flex;flex-direction:column;gap:8px;">
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        1
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        2
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                        class="demo-item">
+                                                                                                                        3
+                                                                                                            </div>
+                                                                                                </div>
+                                                                                    </div>
+                                                                        </div>
+                                                            </div>
+
+                                                            <!-- flex-wrap -->
+                                                            <div id="demo-fw" class="demo-panel">
+                                                                        <div class="demo-label">flex-wrap</div>
+                                                                        <div
+                                                                                    style="display:flex;flex-direction:column;gap:10px;">
+                                                                                    <div>
+                                                                                                <div
+                                                                                                            style="font-size:0.7rem;color:#718096;margin-bottom:4px;font-family:monospace;">
+                                                                                                            nowrap —
+                                                                                                            overflows
+                                                                                                </div>
+                                                                                                <div class="demo-box"
+                                                                                                            style="display:flex;flex-wrap:nowrap;gap:8px;align-items:center;overflow:hidden;">
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-shrink:0;min-width:80px;">
+                                                                                                                        Item
+                                                                                                                        1
+                                                                                                            </div>
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-shrink:0;min-width:80px;">
+                                                                                                                        Item
+                                                                                                                        2
+                                                                                                            </div>
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-shrink:0;min-width:80px;">
+                                                                                                                        Item
+                                                                                                                        3
+                                                                                                            </div>
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-shrink:0;min-width:80px;">
+                                                                                                                        Item
+                                                                                                                        4
+                                                                                                            </div>
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-shrink:0;min-width:80px;">
+                                                                                                                        Item
+                                                                                                                        5
+                                                                                                            </div>
+                                                                                                </div>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                                <div
+                                                                                                            style="font-size:0.7rem;color:#718096;margin-bottom:4px;font-family:monospace;">
+                                                                                                            wrap — flows
+                                                                                                            to next line
+                                                                                                </div>
+                                                                                                <div class="demo-box"
+                                                                                                            style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-shrink:0;min-width:80px;">
+                                                                                                                        Item
+                                                                                                                        1
+                                                                                                            </div>
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-shrink:0;min-width:80px;">
+                                                                                                                        Item
+                                                                                                                        2
+                                                                                                            </div>
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-shrink:0;min-width:80px;">
+                                                                                                                        Item
+                                                                                                                        3
+                                                                                                            </div>
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-shrink:0;min-width:80px;">
+                                                                                                                        Item
+                                                                                                                        4
+                                                                                                            </div>
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-shrink:0;min-width:80px;">
+                                                                                                                        Item
+                                                                                                                        5
+                                                                                                            </div>
+                                                                                                </div>
+                                                                                    </div>
+                                                                        </div>
+                                                            </div>
+
+                                                            <!-- flex-grow -->
+                                                            <div id="demo-fg" class="demo-panel">
+                                                                        <div class="demo-label">flex-grow</div>
+                                                                        <div
+                                                                                    style="display:flex;flex-direction:column;gap:10px;">
+                                                                                    <div>
+                                                                                                <div
+                                                                                                            style="font-size:0.7rem;color:#718096;margin-bottom:4px;font-family:monospace;">
+                                                                                                            flex-grow: 0
+                                                                                                            0 0
+                                                                                                            (default)
+                                                                                                </div>
+                                                                                                <div class="demo-box"
+                                                                                                            style="display:flex;gap:8px;align-items:center;">
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-grow:0;">
+                                                                                                                        A
+                                                                                                            </div>
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-grow:0;">
+                                                                                                                        B
+                                                                                                            </div>
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-grow:0;">
+                                                                                                                        C
+                                                                                                            </div>
+                                                                                                </div>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                                <div
+                                                                                                            style="font-size:0.7rem;color:#718096;margin-bottom:4px;font-family:monospace;">
+                                                                                                            flex-grow: 1
+                                                                                                            1 1 (equal)
+                                                                                                </div>
+                                                                                                <div class="demo-box"
+                                                                                                            style="display:flex;gap:8px;align-items:center;">
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-grow:1;text-align:center;">
+                                                                                                                        A
+                                                                                                                        (1)
+                                                                                                            </div>
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-grow:1;text-align:center;">
+                                                                                                                        B
+                                                                                                                        (1)
+                                                                                                            </div>
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-grow:1;text-align:center;">
+                                                                                                                        C
+                                                                                                                        (1)
+                                                                                                            </div>
+                                                                                                </div>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                                <div
+                                                                                                            style="font-size:0.7rem;color:#718096;margin-bottom:4px;font-family:monospace;">
+                                                                                                            flex-grow: 1
+                                                                                                            2 1 (B gets
+                                                                                                            more)</div>
+                                                                                                <div class="demo-box"
+                                                                                                            style="display:flex;gap:8px;align-items:center;">
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-grow:1;text-align:center;">
+                                                                                                                        A
+                                                                                                                        (1)
+                                                                                                            </div>
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-grow:2;text-align:center;background:linear-gradient(135deg,#2d1f4e,#1a3a5c);">
+                                                                                                                        B
+                                                                                                                        (2)
+                                                                                                            </div>
+                                                                                                            <div class="demo-item"
+                                                                                                                        style="flex-grow:1;text-align:center;">
+                                                                                                                        C
+                                                                                                                        (1)
+                                                                                                            </div>
+                                                                                                </div>
+                                                                                    </div>
+                                                                        </div>
+                                                            </div>
+
+                                                            <!-- align-self -->
+                                                            <div id="demo-as" class="demo-panel">
+                                                                        <div class="demo-label">align-self</div>
+                                                                        <div class="demo-box"
+                                                                                    style="display:flex;gap:8px;height:110px;align-items:stretch;">
+                                                                                    <div class="demo-item"
+                                                                                                style="align-self:flex-start;flex:1;text-align:center;font-size:0.68rem;">
+                                                                                                flex-start</div>
+                                                                                    <div class="demo-item"
+                                                                                                style="align-self:center;flex:1;text-align:center;font-size:0.68rem;">
+                                                                                                center</div>
+                                                                                    <div class="demo-item"
+                                                                                                style="align-self:flex-end;flex:1;text-align:center;font-size:0.68rem;">
+                                                                                                flex-end</div>
+                                                                                    <div class="demo-item"
+                                                                                                style="align-self:stretch;flex:1;text-align:center;font-size:0.68rem;background:linear-gradient(135deg,#1a3a2a,#1a3a5c);">
+                                                                                                stretch</div>
+                                                                        </div>
+                                                            </div>
+
+                                                </div>
+                                    </div>
+                        </section>
+
+                        <!-- ══════════════════════════════════════
+       PATTERNS
+  ══════════════════════════════════════ -->
+                        <section id="patterns">
+                                    <div class="section-header">
+                                                <div class="section-num">✦</div>
+                                                <div>
+                                                            <div class="section-title">Real-world Patterns</div>
+                                                            <div class="section-desc">Common layout solutions using
+                                                                        flexbox</div>
+                                                </div>
+                                    </div>
+
+                                    <div class="pattern-grid">
+
+                                                <div class="pattern-card">
+                                                            <div class="pattern-preview">
+                                                                        <div
+                                                                                    style="display:flex;justify-content:center;align-items:center;width:100%;height:100%;background:#0f1117;border-radius:6px;">
+                                                                                    <div class="p-item"
+                                                                                                style="width:60px;height:40px;">
+                                                                                                Centered</div>
+                                                                        </div>
+                                                            </div>
+                                                            <div class="pattern-body">
+                                                                        <div class="pattern-name">[1] Perfect Centering
+                                                                        </div>
+                                                                        <div class="pattern-desc">Center anything
+                                                                                    horizontally & vertically</div>
+                                                                        <pre
+                                                                                    style="margin-top:10px;padding:0;font-size:0.75rem;"><code><span class="sel">.center</span> {
+  <span class="kw">display</span>: <span class="val-c">flex</span>;
+  <span class="kw">justify-content</span>: <span class="val-c">center</span>;
+  <span class="kw">align-items</span>: <span class="val-c">center</span>;
+}</code></pre>
+                                                            </div>
+                                                </div>
+
+                                                <div class="pattern-card">
+                                                            <div class="pattern-preview">
+                                                                        <div
+                                                                                    style="display:flex;gap:6px;width:100%;height:70px;">
+                                                                                    <div class="p-item"
+                                                                                                style="flex:1;height:100%;">
+                                                                                                1</div>
+                                                                                    <div class="p-item"
+                                                                                                style="flex:1;height:100%;">
+                                                                                                2</div>
+                                                                                    <div class="p-item"
+                                                                                                style="flex:1;height:100%;">
+                                                                                                3</div>
+                                                                        </div>
+                                                            </div>
+                                                            <div class="pattern-body">
+                                                                        <div class="pattern-name">[2] Equal Columns
+                                                                        </div>
+                                                                        <div class="pattern-desc">All columns grow
+                                                                                    equally</div>
+                                                                        <pre
+                                                                                    style="margin-top:10px;padding:0;font-size:0.75rem;"><code><span class="sel">.cols</span> { <span class="kw">display</span>: <span class="val-c">flex</span>; <span class="kw">gap</span>: <span class="num-c">16px</span>; }
+<span class="sel">.cols > *</span> { <span class="kw">flex</span>: <span class="num-c">1</span>; }</code></pre>
+                                                            </div>
+                                                </div>
+
+                                                <div class="pattern-card">
+                                                            <div class="pattern-preview">
+                                                                        <div
+                                                                                    style="display:flex;flex-direction:column;height:100%;width:100%;">
+                                                                                    <div class="p-item"
+                                                                                                style="padding:4px;font-size:0.65rem;">
+                                                                                                Header</div>
+                                                                                    <div class="p-item"
+                                                                                                style="flex:1;margin:4px 0;font-size:0.65rem;">
+                                                                                                Main (flex:1)</div>
+                                                                                    <div class="p-item"
+                                                                                                style="padding:4px;font-size:0.65rem;">
+                                                                                                Footer</div>
+                                                                        </div>
+                                                            </div>
+                                                            <div class="pattern-body">
+                                                                        <div class="pattern-name">[3] Sticky Footer
+                                                                        </div>
+                                                                        <div class="pattern-desc">Footer sticks to
+                                                                                    bottom of viewport</div>
+                                                                        <pre
+                                                                                    style="margin-top:10px;padding:0;font-size:0.75rem;"><code><span class="sel">.page</span> {
+  <span class="kw">display</span>: <span class="val-c">flex</span>;
+  <span class="kw">flex-direction</span>: <span class="val-c">column</span>;
+  <span class="kw">min-height</span>: <span class="num-c">100vh</span>;
+}
+<span class="sel">main</span> { <span class="kw">flex</span>: <span class="num-c">1</span>; }</code></pre>
+                                                            </div>
+                                                </div>
+
+                                                <div class="pattern-card">
+                                                            <div class="pattern-preview">
+                                                                        <div
+                                                                                    style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:8px;background:#0f1117;border-radius:6px;">
+                                                                                    <div class="p-item"
+                                                                                                style="padding:4px 10px;font-size:0.65rem;">
+                                                                                                Logo</div>
+                                                                                    <div style="display:flex;gap:4px;">
+                                                                                                <div class="p-item"
+                                                                                                            style="padding:4px 8px;font-size:0.65rem;">
+                                                                                                            Nav</div>
+                                                                                                <div class="p-item"
+                                                                                                            style="padding:4px 8px;font-size:0.65rem;">
+                                                                                                            Nav</div>
+                                                                                                <div class="p-item"
+                                                                                                            style="padding:4px 8px;font-size:0.65rem;">
+                                                                                                            CTA</div>
+                                                                                    </div>
+                                                                        </div>
+                                                            </div>
+                                                            <div class="pattern-body">
+                                                                        <div class="pattern-name">[4] Navbar</div>
+                                                                        <div class="pattern-desc">Logo left, links right
+                                                                        </div>
+                                                                        <pre
+                                                                                    style="margin-top:10px;padding:0;font-size:0.75rem;"><code><span class="sel">.navbar</span> {
+  <span class="kw">display</span>: <span class="val-c">flex</span>;
+  <span class="kw">justify-content</span>: <span class="val-c">space-between</span>;
+  <span class="kw">align-items</span>: <span class="val-c">center</span>;
+}</code></pre>
+                                                            </div>
+                                                </div>
+
+                                                <div class="pattern-card">
+                                                            <div class="pattern-preview">
+                                                                        <div
+                                                                                    style="display:flex;flex-wrap:wrap;gap:6px;width:100%;">
+                                                                                    <div class="p-item"
+                                                                                                style="flex:1 1 60px;height:40px;font-size:0.65rem;">
+                                                                                                Card</div>
+                                                                                    <div class="p-item"
+                                                                                                style="flex:1 1 60px;height:40px;font-size:0.65rem;">
+                                                                                                Card</div>
+                                                                                    <div class="p-item"
+                                                                                                style="flex:1 1 60px;height:40px;font-size:0.65rem;">
+                                                                                                Card</div>
+                                                                                    <div class="p-item"
+                                                                                                style="flex:1 1 60px;height:40px;font-size:0.65rem;">
+                                                                                                Card</div>
+                                                                        </div>
+                                                            </div>
+                                                            <div class="pattern-body">
+                                                                        <div class="pattern-name">[5] Responsive Card
+                                                                                    Grid</div>
+                                                                        <div class="pattern-desc">Cards wrap and fill
+                                                                                    space automatically</div>
+                                                                        <pre
+                                                                                    style="margin-top:10px;padding:0;font-size:0.75rem;"><code><span class="sel">.grid</span> {
+  <span class="kw">display</span>: <span class="val-c">flex</span>;
+  <span class="kw">flex-wrap</span>: <span class="val-c">wrap</span>;
+  <span class="kw">gap</span>: <span class="num-c">16px</span>;
+}
+<span class="sel">.grid > *</span> { <span class="kw">flex</span>: <span class="num-c">1 1 260px</span>; }</code></pre>
+                                                            </div>
+                                                </div>
+
+                                                <div class="pattern-card">
+                                                            <div class="pattern-preview">
+                                                                        <div
+                                                                                    style="display:flex;gap:6px;align-items:flex-start;width:100%;">
+                                                                                    <div class="p-item"
+                                                                                                style="width:36px;height:36px;flex-shrink:0;font-size:0.65rem;">
+                                                                                                IMG</div>
+                                                                                    <div class="p-item"
+                                                                                                style="flex:1;height:50px;font-size:0.65rem;text-align:left;padding-left:8px;">
+                                                                                                Content text here...
+                                                                                    </div>
+                                                                        </div>
+                                                            </div>
+                                                            <div class="pattern-body">
+                                                                        <div class="pattern-name">[6] Media Object</div>
+                                                                        <div class="pattern-desc">Image + text side by
+                                                                                    side</div>
+                                                                        <pre
+                                                                                    style="margin-top:10px;padding:0;font-size:0.75rem;"><code><span class="sel">.media</span> { <span class="kw">display</span>: <span class="val-c">flex</span>; <span class="kw">gap</span>: <span class="num-c">16px</span>; }
+<span class="sel">.media img</span> { <span class="kw">flex-shrink</span>: <span class="num-c">0</span>; }
+<span class="sel">.media .body</span> { <span class="kw">flex</span>: <span class="num-c">1</span>; }</code></pre>
+                                                            </div>
+                                                </div>
+
+                                    </div>
+                        </section>
+
+                        <!-- ══════════════════════════════════════
+       CHEAT SHEET TABLE
+  ══════════════════════════════════════ -->
+                        <section id="cheatsheet">
+                                    <div class="section-header">
+                                                <div class="section-num">≡</div>
+                                                <div>
+                                                            <div class="section-title">Cheat Sheet</div>
+                                                            <div class="section-desc">All properties at a glance</div>
+                                                </div>
+                                    </div>
+                                    <div class="table-wrap">
+                                                <table>
+                                                            <thead>
+                                                                        <tr>
+                                                                                    <th>#</th>
+                                                                                    <th>Property</th>
+                                                                                    <th>Applied On</th>
+                                                                                    <th>Axis</th>
+                                                                                    <th>Default</th>
+                                                                                    <th>Common Values</th>
+                                                                        </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                        <tr>
+                                                                                    <td>[1]</td>
+                                                                                    <td class="prop-cell">display</td>
+                                                                                    <td><span class="axis-parent">Parent</span>
+                                                                                    </td>
+                                                                                    <td>—</td>
+                                                                                    <td><code>block</code></td>
+                                                                                    <td>flex, inline-flex</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                    <td>[2]</td>
+                                                                                    <td class="prop-cell">flex-direction
+                                                                                    </td>
+                                                                                    <td><span class="axis-parent">Parent</span>
+                                                                                    </td>
+                                                                                    <td><span class="axis-main">Main</span>
+                                                                                    </td>
+                                                                                    <td><code>row</code></td>
+                                                                                    <td>row, column, row-reverse,
+                                                                                                column-reverse</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                    <td>[3]</td>
+                                                                                    <td class="prop-cell">flex-wrap</td>
+                                                                                    <td><span class="axis-parent">Parent</span>
+                                                                                    </td>
+                                                                                    <td><span class="axis-cross">Cross</span>
+                                                                                    </td>
+                                                                                    <td><code>nowrap</code></td>
+                                                                                    <td>nowrap, wrap, wrap-reverse</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                    <td>[4]</td>
+                                                                                    <td class="prop-cell">flex-flow</td>
+                                                                                    <td><span class="axis-parent">Parent</span>
+                                                                                    </td>
+                                                                                    <td>Both</td>
+                                                                                    <td><code>row nowrap</code></td>
+                                                                                    <td>Shorthand for direction + wrap
+                                                                                    </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                    <td>[5]</td>
+                                                                                    <td class="prop-cell">
+                                                                                                justify-content</td>
+                                                                                    <td><span class="axis-parent">Parent</span>
+                                                                                    </td>
+                                                                                    <td><span class="axis-main">Main</span>
+                                                                                    </td>
+                                                                                    <td><code>flex-start</code></td>
+                                                                                    <td>center, space-between,
+                                                                                                space-evenly</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                    <td>[6]</td>
+                                                                                    <td class="prop-cell">align-items
+                                                                                    </td>
+                                                                                    <td><span class="axis-parent">Parent</span>
+                                                                                    </td>
+                                                                                    <td><span class="axis-cross">Cross</span>
+                                                                                    </td>
+                                                                                    <td><code>stretch</code></td>
+                                                                                    <td>center, flex-start, flex-end,
+                                                                                                baseline</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                    <td>[7]</td>
+                                                                                    <td class="prop-cell">align-content
+                                                                                    </td>
+                                                                                    <td><span class="axis-parent">Parent</span>
+                                                                                    </td>
+                                                                                    <td><span class="axis-cross">Cross</span>
+                                                                                    </td>
+                                                                                    <td><code>normal</code></td>
+                                                                                    <td>center, space-between
+                                                                                                (multi-line only)</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                    <td>[8]</td>
+                                                                                    <td class="prop-cell">gap</td>
+                                                                                    <td><span class="axis-parent">Parent</span>
+                                                                                    </td>
+                                                                                    <td>Both</td>
+                                                                                    <td><code>0</code></td>
+                                                                                    <td>16px, 20px 10px, row-gap,
+                                                                                                column-gap</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                    <td>[1]</td>
+                                                                                    <td class="prop-cell">order</td>
+                                                                                    <td><span class="axis-item">Child</span>
+                                                                                    </td>
+                                                                                    <td>—</td>
+                                                                                    <td><code>0</code></td>
+                                                                                    <td>-1, 0, 1, 2 (lower = first)</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                    <td>[2]</td>
+                                                                                    <td class="prop-cell">flex-grow</td>
+                                                                                    <td><span class="axis-item">Child</span>
+                                                                                    </td>
+                                                                                    <td><span class="axis-main">Main</span>
+                                                                                    </td>
+                                                                                    <td><code>0</code></td>
+                                                                                    <td>0 (no grow), 1 (grow), 2 (grow
+                                                                                                2×)</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                    <td>[3]</td>
+                                                                                    <td class="prop-cell">flex-shrink
+                                                                                    </td>
+                                                                                    <td><span class="axis-item">Child</span>
+                                                                                    </td>
+                                                                                    <td><span class="axis-main">Main</span>
+                                                                                    </td>
+                                                                                    <td><code>1</code></td>
+                                                                                    <td>0 (no shrink), 1 (shrink), 2
+                                                                                                (shrink 2×)</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                    <td>[4]</td>
+                                                                                    <td class="prop-cell">flex-basis
+                                                                                    </td>
+                                                                                    <td><span class="axis-item">Child</span>
+                                                                                    </td>
+                                                                                    <td><span class="axis-main">Main</span>
+                                                                                    </td>
+                                                                                    <td><code>auto</code></td>
+                                                                                    <td>0, 200px, 50%, content</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                    <td>[5]</td>
+                                                                                    <td class="prop-cell">flex</td>
+                                                                                    <td><span class="axis-item">Child</span>
+                                                                                    </td>
+                                                                                    <td><span class="axis-main">Main</span>
+                                                                                    </td>
+                                                                                    <td><code>0 1 auto</code></td>
+                                                                                    <td>1, auto, none, 2 1 100px</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                    <td>[6]</td>
+                                                                                    <td class="prop-cell">align-self
+                                                                                    </td>
+                                                                                    <td><span class="axis-item">Child</span>
+                                                                                    </td>
+                                                                                    <td><span class="axis-cross">Cross</span>
+                                                                                    </td>
+                                                                                    <td><code>auto</code></td>
+                                                                                    <td>center, flex-start, flex-end,
+                                                                                                stretch</td>
+                                                                        </tr>
+                                                            </tbody>
+                                                </table>
+                                    </div>
+                        </section>
+
+                        <!-- ══════════════════════════════════════
+       FULL CODE
+  ══════════════════════════════════════ -->
+                        <section id="fullcode">
+                                    <div class="section-header">
+                                                <div class="section-num">&lt;/&gt;</div>
+                                                <div>
+                                                            <div class="section-title">Full CSS Code</div>
+                                                            <div class="section-desc">Copy-ready complete reference
+                                                            </div>
+                                                </div>
+                                    </div>
+                                    <div class="code-wrap">
+                                                <div class="code-bar">
+                                                            <span>flexbox-complete.css</span>
+                                                            <button class="copy-btn" onclick="copyCode()">Copy
+                                                                        All</button>
+                                                </div>
+                                                <pre><code id="fullcss"><span class="cm">/* ── PARENT PROPERTIES ── */</span>
+
+<span class="sel">.container</span> {
+  <span class="cm">/* [1] display */</span>
+  <span class="kw">display</span>: <span class="val-c">flex</span>;
+  <span class="kw">display</span>: <span class="val-c">inline-flex</span>;
+
+  <span class="cm">/* [2] flex-direction */</span>
+  <span class="kw">flex-direction</span>: <span class="val-c">row</span>;
+  <span class="kw">flex-direction</span>: <span class="val-c">row-reverse</span>;
+  <span class="kw">flex-direction</span>: <span class="val-c">column</span>;
+  <span class="kw">flex-direction</span>: <span class="val-c">column-reverse</span>;
+
+  <span class="cm">/* [3] flex-wrap */</span>
+  <span class="kw">flex-wrap</span>: <span class="val-c">nowrap</span>;
+  <span class="kw">flex-wrap</span>: <span class="val-c">wrap</span>;
+  <span class="kw">flex-wrap</span>: <span class="val-c">wrap-reverse</span>;
+
+  <span class="cm">/* [4] flex-flow (shorthand) */</span>
+  <span class="kw">flex-flow</span>: <span class="val-c">row nowrap</span>;
+  <span class="kw">flex-flow</span>: <span class="val-c">column wrap</span>;
+
+  <span class="cm">/* [5] justify-content */</span>
+  <span class="kw">justify-content</span>: <span class="val-c">flex-start</span>;
+  <span class="kw">justify-content</span>: <span class="val-c">flex-end</span>;
+  <span class="kw">justify-content</span>: <span class="val-c">center</span>;
+  <span class="kw">justify-content</span>: <span class="val-c">space-between</span>;
+  <span class="kw">justify-content</span>: <span class="val-c">space-around</span>;
+  <span class="kw">justify-content</span>: <span class="val-c">space-evenly</span>;
+
+  <span class="cm">/* [6] align-items */</span>
+  <span class="kw">align-items</span>: <span class="val-c">stretch</span>;
+  <span class="kw">align-items</span>: <span class="val-c">flex-start</span>;
+  <span class="kw">align-items</span>: <span class="val-c">flex-end</span>;
+  <span class="kw">align-items</span>: <span class="val-c">center</span>;
+  <span class="kw">align-items</span>: <span class="val-c">baseline</span>;
+
+  <span class="cm">/* [7] align-content */</span>
+  <span class="kw">align-content</span>: <span class="val-c">normal</span>;
+  <span class="kw">align-content</span>: <span class="val-c">flex-start</span>;
+  <span class="kw">align-content</span>: <span class="val-c">flex-end</span>;
+  <span class="kw">align-content</span>: <span class="val-c">center</span>;
+  <span class="kw">align-content</span>: <span class="val-c">space-between</span>;
+  <span class="kw">align-content</span>: <span class="val-c">stretch</span>;
+
+  <span class="cm">/* [8] gap */</span>
+  <span class="kw">gap</span>: <span class="num-c">16px</span>;
+  <span class="kw">gap</span>: <span class="num-c">20px 10px</span>;
+  <span class="kw">row-gap</span>: <span class="num-c">20px</span>;
+  <span class="kw">column-gap</span>: <span class="num-c">10px</span>;
+}
+
+<span class="cm">/* ── CHILD PROPERTIES ── */</span>
+
+<span class="sel">.item</span> {
+  <span class="cm">/* [1] order */</span>
+  <span class="kw">order</span>: <span class="num-c">0</span>;
+  <span class="kw">order</span>: <span class="num-c">-1</span>;
+  <span class="kw">order</span>: <span class="num-c">1</span>;
+
+  <span class="cm">/* [2] flex-grow */</span>
+  <span class="kw">flex-grow</span>: <span class="num-c">0</span>;
+  <span class="kw">flex-grow</span>: <span class="num-c">1</span>;
+  <span class="kw">flex-grow</span>: <span class="num-c">2</span>;
+
+  <span class="cm">/* [3] flex-shrink */</span>
+  <span class="kw">flex-shrink</span>: <span class="num-c">1</span>;
+  <span class="kw">flex-shrink</span>: <span class="num-c">0</span>;
+  <span class="kw">flex-shrink</span>: <span class="num-c">2</span>;
+
+  <span class="cm">/* [4] flex-basis */</span>
+  <span class="kw">flex-basis</span>: <span class="val-c">auto</span>;
+  <span class="kw">flex-basis</span>: <span class="num-c">0</span>;
+  <span class="kw">flex-basis</span>: <span class="num-c">200px</span>;
+  <span class="kw">flex-basis</span>: <span class="num-c">50%</span>;
+
+  <span class="cm">/* [5] flex (shorthand) */</span>
+  <span class="kw">flex</span>: <span class="num-c">0 1 auto</span>;
+  <span class="kw">flex</span>: <span class="num-c">1</span>;
+  <span class="kw">flex</span>: <span class="val-c">auto</span>;
+  <span class="kw">flex</span>: <span class="val-c">none</span>;
+
+  <span class="cm">/* [6] align-self */</span>
+  <span class="kw">align-self</span>: <span class="val-c">auto</span>;
+  <span class="kw">align-self</span>: <span class="val-c">flex-start</span>;
+  <span class="kw">align-self</span>: <span class="val-c">flex-end</span>;
+  <span class="kw">align-self</span>: <span class="val-c">center</span>;
+  <span class="kw">align-self</span>: <span class="val-c">stretch</span>;
+  <span class="kw">align-self</span>: <span class="val-c">baseline</span>;
+}
+
+<span class="cm">/* ── PATTERNS ── */</span>
+
+<span class="sel">.center</span>        { <span class="kw">display</span>:<span class="val-c">flex</span>; <span class="kw">justify-content</span>:<span class="val-c">center</span>; <span class="kw">align-items</span>:<span class="val-c">center</span>; }
+<span class="sel">.equal-cols > *</span> { <span class="kw">flex</span>:<span class="num-c">1</span>; }
+<span class="sel">.sticky-footer</span> { <span class="kw">display</span>:<span class="val-c">flex</span>; <span class="kw">flex-direction</span>:<span class="val-c">column</span>; <span class="kw">min-height</span>:<span class="num-c">100vh</span>; }
+<span class="sel">.sticky-footer main</span> { <span class="kw">flex</span>:<span class="num-c">1</span>; }
+<span class="sel">.card-grid > *</span> { <span class="kw">flex</span>:<span class="num-c">1 1 260px</span>; }
+<span class="sel">.push-last > *:last-child</span> { <span class="kw">margin-left</span>:<span class="val-c">auto</span>; }
+</code></pre>
+                                    </div>
+                        </section>
+
+            </main>
+
+            <footer>
+                        CSS Flexbox Complete Reference &mdash; All 14 properties &bull; Live demos &bull; 6 patterns
+            </footer>
+
+            <script>
+                        function showDemo(id) {
+                                    document.querySelectorAll('.demo-panel').forEach(p => p.classList.remove('active'));
+                                    document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
+                                    document.getElementById('demo-' + id).classList.add('active');
+                                    event.target.classList.add('active');
+                        }
+
+                        function copyCode() {
+                                    const props = `/* PARENT PROPERTIES */
+.container {
+  display: flex;
+  display: inline-flex;
+  flex-direction: row | row-reverse | column | column-reverse;
+  flex-wrap: nowrap | wrap | wrap-reverse;
+  flex-flow: row nowrap;
+  justify-content: flex-start | flex-end | center | space-between | space-around | space-evenly;
+  align-items: stretch | flex-start | flex-end | center | baseline;
+  align-content: normal | flex-start | flex-end | center | space-between | space-around | stretch;
+  gap: 16px;
+  row-gap: 20px;
+  column-gap: 10px;
+}
+
+/* CHILD PROPERTIES */
+.item {
+  order: 0;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  flex: 0 1 auto;
+  align-self: auto | flex-start | flex-end | center | baseline | stretch;
+}
+
+/* PATTERNS */
+.center        { display:flex; justify-content:center; align-items:center; }
+.equal-cols>*  { flex:1; }
+.sticky-footer { display:flex; flex-direction:column; min-height:100vh; }
+.sticky-footer main { flex:1; }
+.card-grid>*   { flex:1 1 260px; }
+.push-last>*:last-child { margin-left:auto; }`;
+                                    navigator.clipboard.writeText(props).then(() => {
+                                                const btn = document.querySelector('.copy-btn');
+                                                btn.textContent = 'Copied!';
+                                                btn.style.color = '#68d391';
+                                                setTimeout(() => { btn.textContent = 'Copy All'; btn.style.color = ''; }, 2000);
+                                    });
+                        }
+            </script>
+
+</body>
+
+</html>

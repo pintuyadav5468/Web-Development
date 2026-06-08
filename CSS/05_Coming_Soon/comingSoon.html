@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Tea Landing Page</title>
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap"
+                        rel="stylesheet">
+            <style>
+                        * {
+                                    margin: 0;
+                                    padding: 0;
+                                    box-sizing: border-box;
+                        }
+
+                        body {
+                                    min-height: 100vh;
+                                    background: linear-gradient(160deg, #87ceeb 0%, #5bb8e8 50%, #3aa0d8 100%);
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    padding: 3rem 1.5rem;
+                                    font-family: 'Inter', sans-serif;
+                        }
+
+                        .bg-leaf {
+                                    position: fixed;
+                                    opacity: 0.08;
+                                    pointer-events: none;
+                                    font-size: 100px;
+                        }
+
+                        .bg-leaf-1 {
+                                    top: 5%;
+                                    left: 4%;
+                                    transform: rotate(-30deg);
+                                    font-size: 130px;
+                        }
+
+                        .bg-leaf-2 {
+                                    bottom: 8%;
+                                    right: 5%;
+                                    transform: rotate(40deg);
+                                    font-size: 110px;
+                        }
+
+                        .bg-leaf-3 {
+                                    top: 45%;
+                                    left: -2%;
+                                    transform: rotate(-60deg);
+                                    font-size: 80px;
+                        }
+
+                        .bg-leaf-4 {
+                                    top: 12%;
+                                    right: 7%;
+                                    transform: rotate(20deg);
+                                    font-size: 70px;
+                        }
+
+                        .card {
+                                    background: linear-gradient(145deg, #c8964a 0%, #a0702e 50%, #8b5e22 100%);
+                                    border: 1px solid rgba(255, 255, 255, 0.25);
+                                    border-radius: 20px;
+                                    padding: 2.5rem 2rem;
+                                    max-width: 480px;
+                                    width: 100%;
+                                    text-align: center;
+                                    position: relative;
+                                    z-index: 1;
+                                    box-shadow: 0 20px 60px rgba(100, 60, 10, 0.35);
+                        }
+
+                        .logo-wrap {
+                                    display: inline-block;
+                                    position: relative;
+                                    margin-bottom: 1.5rem;
+                        }
+
+                        .logo-wrap img {
+                                    width: 90px;
+                                    height: 90px;
+                                    border-radius: 50%;
+                                    object-fit: cover;
+                                    border: 3px solid rgba(255, 255, 255, 0.35);
+                                    display: block;
+                        }
+
+                        .logo-badge {
+                                    position: absolute;
+                                    bottom: -4px;
+                                    right: -4px;
+                                    background: #87ceeb;
+                                    border-radius: 50%;
+                                    width: 26px;
+                                    height: 26px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    font-size: 14px;
+                                    border: 2px solid #a0702e;
+                        }
+
+                        .brand {
+                                    font-family: 'Playfair Display', serif;
+                                    font-size: 12px;
+                                    letter-spacing: 3px;
+                                    color: #f5d8a0;
+                                    text-transform: uppercase;
+                                    margin-bottom: 0.5rem;
+                        }
+
+                        .headline {
+                                    font-family: 'Playfair Display', serif;
+                                    font-size: 38px;
+                                    font-weight: 600;
+                                    color: #fff8ee;
+                                    margin: 0 0 0.25rem;
+                                    line-height: 1.15;
+                                    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+                        }
+
+                        .sub {
+                                    font-size: 13px;
+                                    color: rgba(255, 235, 190, 0.75);
+                                    margin-bottom: 1.5rem;
+                                    letter-spacing: 0.5px;
+                        }
+
+                        .divider {
+                                    width: 40px;
+                                    height: 1px;
+                                    background: #f5d8a0;
+                                    margin: 0 auto 1.5rem;
+                                    opacity: 0.5;
+                        }
+
+                        .pills {
+                                    display: flex;
+                                    justify-content: center;
+                                    gap: 8px;
+                                    margin-bottom: 2rem;
+                                    flex-wrap: wrap;
+                        }
+
+                        .pill {
+                                    background: rgba(255, 255, 255, 0.12);
+                                    border: 0.5px solid rgba(255, 255, 255, 0.3);
+                                    color: #fdf0d5;
+                                    font-size: 11px;
+                                    padding: 4px 12px;
+                                    border-radius: 20px;
+                                    letter-spacing: 0.5px;
+                        }
+
+                        .countdown {
+                                    display: flex;
+                                    justify-content: center;
+                                    gap: 16px;
+                                    margin-bottom: 2rem;
+                        }
+
+                        .count-block {
+                                    text-align: center;
+                        }
+
+                        .count-num {
+                                    font-family: 'Playfair Display', serif;
+                                    font-size: 28px;
+                                    color: #fff8ee;
+                                    font-weight: 600;
+                                    line-height: 1;
+                                    display: block;
+                        }
+
+                        .count-label {
+                                    font-size: 10px;
+                                    color: rgba(255, 235, 190, 0.55);
+                                    letter-spacing: 1px;
+                                    text-transform: uppercase;
+                                    display: block;
+                                    margin-top: 2px;
+                        }
+
+                        .count-sep {
+                                    font-size: 24px;
+                                    color: rgba(255, 235, 190, 0.3);
+                                    align-self: flex-start;
+                                    padding-top: 4px;
+                                    font-weight: 300;
+                        }
+
+                        .body-text {
+                                    font-size: 14px;
+                                    color: rgba(255, 235, 190, 0.7);
+                                    line-height: 1.7;
+                                    margin-bottom: 1.5rem;
+                        }
+
+                        .input-row {
+                                    display: flex;
+                                    gap: 8px;
+                        }
+
+                        .email-input {
+                                    flex: 1;
+                                    background: rgba(255, 255, 255, 0.15);
+                                    border: 0.5px solid rgba(255, 255, 255, 0.3);
+                                    border-radius: 10px;
+                                    padding: 0 14px;
+                                    height: 44px;
+                                    color: #fff;
+                                    font-size: 13px;
+                                    font-family: 'Inter', sans-serif;
+                                    outline: none;
+                                    transition: border-color 0.2s;
+                        }
+
+                        .email-input::placeholder {
+                                    color: rgba(255, 235, 190, 0.45);
+                        }
+
+                        .email-input:focus {
+                                    border-color: rgba(255, 255, 255, 0.65);
+                        }
+
+                        .notify-btn {
+                                    background: #87ceeb;
+                                    border: none;
+                                    border-radius: 10px;
+                                    padding: 0 20px;
+                                    height: 44px;
+                                    color: #5c3b10;
+                                    font-weight: 500;
+                                    font-size: 13px;
+                                    font-family: 'Inter', sans-serif;
+                                    cursor: pointer;
+                                    white-space: nowrap;
+                                    transition: background 0.2s, transform 0.1s;
+                        }
+
+                        .notify-btn:hover {
+                                    background: #a8ddf2;
+                        }
+
+                        .notify-btn:active {
+                                    transform: scale(0.97);
+                        }
+
+                        .success-msg {
+                                    display: none;
+                                    color: #fdf0d5;
+                                    font-size: 13px;
+                                    margin-top: 10px;
+                        }
+
+                        .footer-note {
+                                    font-size: 11px;
+                                    color: rgba(255, 235, 190, 0.35);
+                                    margin-top: 1rem;
+                        }
+            </style>
+</head>
+
+<body>
+
+            <div class="bg-leaf bg-leaf-1">🌿</div>
+            <div class="bg-leaf bg-leaf-2">🌿</div>
+            <div class="bg-leaf bg-leaf-3">🍃</div>
+            <div class="bg-leaf bg-leaf-4">🍃</div>
+
+            <div class="card">
+                        <div class="logo-wrap">
+                                    <img src="https://images.pexels.com/photos/17473023/pexels-photo-17473023.jpeg"
+                                                alt="Tea Logo">
+                                    <div class="logo-badge">🍵</div>
+                        </div>
+
+                        <p class="brand">Artisan Tea Co.</p>
+                        <h1 class="headline">Coming Soon</h1>
+                        <p class="sub">Something rare is brewing</p>
+                        <div class="divider"></div>
+
+                        <div class="pills">
+                                    <span class="pill">Organic Blends</span>
+                                    <span class="pill">Single Origin</span>
+                                    <span class="pill">Hand Picked</span>
+                        </div>
+
+                        <div class="countdown">
+                                    <div class="count-block"><span class="count-num" id="cd-d">00</span><span
+                                                            class="count-label">Days</span></div>
+                                    <span class="count-sep">:</span>
+                                    <div class="count-block"><span class="count-num" id="cd-h">00</span><span
+                                                            class="count-label">Hours</span></div>
+                                    <span class="count-sep">:</span>
+                                    <div class="count-block"><span class="count-num" id="cd-m">00</span><span
+                                                            class="count-label">Mins</span></div>
+                                    <span class="count-sep">:</span>
+                                    <div class="count-block"><span class="count-num" id="cd-s">00</span><span
+                                                            class="count-label">Secs</span></div>
+                        </div>
+
+                        <p class="body-text">We're crafting an experience as refined as our teas. Be the first to know
+                                    when we launch.</p>
+
+                        <div class="input-row">
+                                    <input class="email-input" type="email" placeholder="your@email.com"
+                                                id="emailInput">
+                                    <button class="notify-btn" onclick="handleNotify()">Notify Me</button>
+                        </div>
+                        <p class="success-msg" id="successMsg">✓ You're on the list! We'll be in touch.</p>
+                        <p class="footer-note">No spam, ever. Unsubscribe anytime.</p>
+            </div>
+
+            <script>
+                        const launchDate = new Date();
+                        launchDate.setDate(launchDate.getDate() + 30);
+
+                        function tick() {
+                                    const diff = launchDate - new Date();
+                                    if (diff <= 0) return;
+                                    const d = Math.floor(diff / 86400000);
+                                    const h = Math.floor((diff % 86400000) / 3600000);
+                                    const m = Math.floor((diff % 3600000) / 60000);
+                                    const s = Math.floor((diff % 60000) / 1000);
+                                    document.getElementById('cd-d').textContent = String(d).padStart(2, '0');
+                                    document.getElementById('cd-h').textContent = String(h).padStart(2, '0');
+                                    document.getElementById('cd-m').textContent = String(m).padStart(2, '0');
+                                    document.getElementById('cd-s').textContent = String(s).padStart(2, '0');
+                        }
+                        tick();
+                        setInterval(tick, 1000);
+
+                        function handleNotify() {
+                                    const input = document.getElementById('emailInput');
+                                    const msg = document.getElementById('successMsg');
+                                    if (!input.value || !input.value.includes('@')) {
+                                                input.style.borderColor = 'rgba(255,100,100,0.7)';
+                                                setTimeout(() => input.style.borderColor = '', 1500);
+                                                return;
+                                    }
+                                    input.style.display = 'none';
+                                    document.querySelector('.notify-btn').style.display = 'none';
+                                    msg.style.display = 'block';
+                        }
+            </script>
+
+</body>
+
+</html>
