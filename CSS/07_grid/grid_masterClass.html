@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>CSS Grid Masterclass</title>
+            <style>
+                        :root {
+                                    --bg: #0f1115;
+                                    --panel: #181b22;
+                                    --panel-2: #1f232c;
+                                    --line: #2a2f3a;
+                                    --txt: #e6e9ef;
+                                    --muted: #98a0b3;
+                                    --accent: #6ea8fe;
+                                    --accent-2: #f78fb3;
+                                    --green: #7ee787;
+                                    --cell: #2d3340;
+                                    --cell-active: linear-gradient(135deg, #6ea8fe, #a78bfa);
+                                    --code-bg: #11141a;
+                                    --radius: 12px;
+                        }
+
+                        * {
+                                    box-sizing: border-box;
+                                    margin: 0;
+                                    padding: 0;
+                        }
+
+                        body {
+                                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                                    background: var(--bg);
+                                    color: var(--txt);
+                                    line-height: 1.6;
+                                    padding: 24px;
+                        }
+
+                        header {
+                                    max-width: 1100px;
+                                    margin: 0 auto 28px;
+                                    text-align: center;
+                        }
+
+                        header h1 {
+                                    font-size: clamp(28px, 5vw, 44px);
+                                    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+                                    -webkit-background-clip: text;
+                                    background-clip: text;
+                                    -webkit-text-fill-color: transparent;
+                                    margin-bottom: 8px;
+                        }
+
+                        header p {
+                                    color: var(--muted);
+                                    font-size: 16px;
+                        }
+
+                        .wrap {
+                                    max-width: 1100px;
+                                    margin: 0 auto;
+                        }
+
+                        /* Tab navigation */
+                        .tabs {
+                                    display: flex;
+                                    flex-wrap: wrap;
+                                    gap: 8px;
+                                    margin-bottom: 24px;
+                                    justify-content: center;
+                        }
+
+                        .tab {
+                                    background: var(--panel);
+                                    border: 1px solid var(--line);
+                                    color: var(--muted);
+                                    padding: 8px 16px;
+                                    border-radius: 999px;
+                                    cursor: pointer;
+                                    font-size: 14px;
+                                    transition: all .2s ease;
+                        }
+
+                        .tab:hover {
+                                    color: var(--txt);
+                                    border-color: var(--accent);
+                        }
+
+                        .tab.active {
+                                    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+                                    color: #fff;
+                                    border-color: transparent;
+                        }
+
+                        .lesson {
+                                    display: none;
+                                    animation: fade .35s ease;
+                        }
+
+                        .lesson.active {
+                                    display: block;
+                        }
+
+                        @keyframes fade {
+                                    from {
+                                                opacity: 0;
+                                                transform: translateY(8px);
+                                    }
+
+                                    to {
+                                                opacity: 1;
+                                                transform: none;
+                                    }
+                        }
+
+                        .lesson-head {
+                                    margin-bottom: 18px;
+                        }
+
+                        .lesson-head h2 {
+                                    font-size: 24px;
+                                    margin-bottom: 6px;
+                        }
+
+                        .lesson-head p {
+                                    color: var(--muted);
+                        }
+
+                        .panel {
+                                    background: var(--panel);
+                                    border: 1px solid var(--line);
+                                    border-radius: var(--radius);
+                                    padding: 20px;
+                                    margin-bottom: 20px;
+                        }
+
+                        /* Controls */
+                        .controls {
+                                    display: grid;
+                                    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                                    gap: 16px;
+                                    margin-bottom: 8px;
+                        }
+
+                        .ctrl label {
+                                    display: block;
+                                    font-size: 13px;
+                                    color: var(--muted);
+                                    margin-bottom: 6px;
+                        }
+
+                        .ctrl label b {
+                                    color: var(--accent);
+                        }
+
+                        .ctrl input[type=range] {
+                                    width: 100%;
+                                    accent-color: var(--accent);
+                        }
+
+                        .ctrl select,
+                        .ctrl input[type=text] {
+                                    width: 100%;
+                                    background: var(--panel-2);
+                                    border: 1px solid var(--line);
+                                    color: var(--txt);
+                                    padding: 8px 10px;
+                                    border-radius: 8px;
+                                    font-family: inherit;
+                                    font-size: 14px;
+                        }
+
+                        /* The live grid demo area */
+                        .demo {
+                                    background: var(--panel-2);
+                                    border: 1px dashed var(--line);
+                                    border-radius: var(--radius);
+                                    padding: 14px;
+                                    margin-top: 14px;
+                                    min-height: 120px;
+                        }
+
+                        .grid {
+                                    display: grid;
+                                    gap: 10px;
+                                    transition: all .25s ease;
+                        }
+
+                        .item {
+                                    background: var(--cell);
+                                    border-radius: 8px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    font-weight: 600;
+                                    color: var(--txt);
+                                    min-height: 56px;
+                                    border: 1px solid var(--line);
+                                    transition: all .25s ease;
+                                    position: relative;
+                        }
+
+                        .item.hot {
+                                    background: var(--cell-active);
+                                    color: #fff;
+                                    border-color: transparent;
+                                    box-shadow: 0 6px 20px rgba(110, 168, 254, .35);
+                        }
+
+                        /* Code box */
+                        pre.code {
+                                    background: var(--code-bg);
+                                    border: 1px solid var(--line);
+                                    border-radius: var(--radius);
+                                    padding: 16px;
+                                    overflow-x: auto;
+                                    font-family: "SF Mono", Consolas, Monaco, monospace;
+                                    font-size: 13.5px;
+                                    line-height: 1.7;
+                                    margin-top: 14px;
+                                    white-space: pre;
+                        }
+
+                        .code .k {
+                                    color: var(--accent-2);
+                        }
+
+                        /* property */
+                        .code .v {
+                                    color: var(--green);
+                        }
+
+                        /* value */
+                        .code .c {
+                                    color: var(--muted);
+                                    font-style: italic;
+                        }
+
+                        /* comment */
+                        .code .s {
+                                    color: var(--accent);
+                        }
+
+                        /* selector */
+
+                        .note {
+                                    background: rgba(110, 168, 254, .08);
+                                    border-left: 3px solid var(--accent);
+                                    padding: 12px 16px;
+                                    border-radius: 6px;
+                                    margin-top: 14px;
+                                    font-size: 14px;
+                                    color: var(--txt);
+                        }
+
+                        .note b {
+                                    color: var(--accent);
+                        }
+
+                        .pill-row {
+                                    display: flex;
+                                    flex-wrap: wrap;
+                                    gap: 8px;
+                                    margin-top: 10px;
+                        }
+
+                        .pill {
+                                    background: var(--panel-2);
+                                    border: 1px solid var(--line);
+                                    padding: 6px 12px;
+                                    border-radius: 999px;
+                                    cursor: pointer;
+                                    font-size: 13px;
+                                    transition: all .2s;
+                        }
+
+                        .pill:hover {
+                                    border-color: var(--accent);
+                        }
+
+                        .pill.active {
+                                    background: var(--accent);
+                                    color: #fff;
+                                    border-color: transparent;
+                        }
+
+                        h3.sub {
+                                    font-size: 16px;
+                                    margin: 4px 0 10px;
+                                    color: var(--accent);
+                        }
+
+                        /* Cheatsheet table */
+                        table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    font-size: 14px;
+                        }
+
+                        th,
+                        td {
+                                    text-align: left;
+                                    padding: 10px 12px;
+                                    border-bottom: 1px solid var(--line);
+                                    vertical-align: top;
+                        }
+
+                        th {
+                                    color: var(--accent);
+                                    font-size: 13px;
+                                    text-transform: uppercase;
+                                    letter-spacing: .04em;
+                        }
+
+                        td code {
+                                    background: var(--code-bg);
+                                    padding: 2px 6px;
+                                    border-radius: 4px;
+                                    color: var(--green);
+                                    font-size: 13px;
+                        }
+
+                        footer {
+                                    text-align: center;
+                                    color: var(--muted);
+                                    font-size: 13px;
+                                    margin: 32px 0 8px;
+                        }
+            </style>
+</head>
+
+<body>
+
+            <header>
+                        <h1>CSS Grid Masterclass</h1>
+                        <p>Drag the sliders, flip the dropdowns — watch the grid and the code change together.</p>
+            </header>
+
+            <div class="wrap">
+                        <nav class="tabs" id="tabs"></nav>
+
+                        <!-- ================= LESSON 1: BASICS ================= -->
+                        <section class="lesson active" data-lesson="0">
+                                    <div class="lesson-head">
+                                                <h2>1 · Grid Basics — Columns & Rows</h2>
+                                                <p>A grid is a parent with <code>display:grid</code>. You define tracks
+                                                            (columns/rows), and children flow into the cells.</p>
+                                    </div>
+                                    <div class="panel">
+                                                <div class="controls">
+                                                            <div class="ctrl">
+                                                                        <label>Columns: <b id="b-cols">3</b></label>
+                                                                        <input type="range" id="cols" min="1" max="6"
+                                                                                    value="3">
+                                                            </div>
+                                                            <div class="ctrl">
+                                                                        <label>Gap: <b id="b-gap">10</b>px</label>
+                                                                        <input type="range" id="gap" min="0" max="40"
+                                                                                    value="10">
+                                                            </div>
+                                                            <div class="ctrl">
+                                                                        <label>Number of items: <b
+                                                                                                id="b-count">6</b></label>
+                                                                        <input type="range" id="count" min="1" max="12"
+                                                                                    value="6">
+                                                            </div>
+                                                </div>
+                                                <div class="demo">
+                                                            <div class="grid" id="grid1"></div>
+                                                </div>
+                                                <pre class="code" id="code1"></pre>
+                                                <div class="note"><b>Key idea:</b> <code>repeat(3, 1fr)</code> means "3
+                                                            columns, each taking 1 fraction of the free space."
+                                                            <code>fr</code> is the grid superpower — it splits leftover
+                                                            room automatically.</div>
+                                    </div>
+                        </section>
+
+                        <!-- ================= LESSON 2: TRACK SIZING ================= -->
+                        <section class="lesson" data-lesson="1">
+                                    <div class="lesson-head">
+                                                <h2>2 · Track Sizing — fr, px, auto, minmax</h2>
+                                                <p>Columns don't have to be equal. Mix fixed and flexible units. Click a
+                                                            preset to see the difference.</p>
+                                    </div>
+                                    <div class="panel">
+                                                <div class="pill-row" id="track-presets"></div>
+                                                <div class="demo">
+                                                            <div class="grid" id="grid2"></div>
+                                                </div>
+                                                <pre class="code" id="code2"></pre>
+                                                <div class="note"><b>minmax(100px, 1fr)</b> = "never shrink below 100px,
+                                                            but grow to fill space." This is the secret to responsive
+                                                            grids without media queries.</div>
+                                    </div>
+                        </section>
+
+                        <!-- ================= LESSON 3: SPANNING ================= -->
+                        <section class="lesson" data-lesson="2">
+                                    <div class="lesson-head">
+                                                <h2>3 · Spanning Items — grid-column & grid-row</h2>
+                                                <p>Any item can stretch across multiple tracks. Click an item to make it
+                                                            span 2 columns; the orange item is controlled by the
+                                                            sliders.</p>
+                                    </div>
+                                    <div class="panel">
+                                                <div class="controls">
+                                                            <div class="ctrl">
+                                                                        <label>Featured item spans columns: <b
+                                                                                                id="b-span">2</b></label>
+                                                                        <input type="range" id="span" min="1" max="4"
+                                                                                    value="2">
+                                                            </div>
+                                                            <div class="ctrl">
+                                                                        <label>...and spans rows: <b
+                                                                                                id="b-spanr">1</b></label>
+                                                                        <input type="range" id="spanr" min="1" max="3"
+                                                                                    value="1">
+                                                            </div>
+                                                </div>
+                                                <div class="demo">
+                                                            <div class="grid" id="grid3"></div>
+                                                </div>
+                                                <pre class="code" id="code3"></pre>
+                                                <div class="note"><b>grid-column: span 2</b> tells one item to occupy
+                                                            two column tracks. You can also use exact lines:
+                                                            <code>grid-column: 1 / 3</code> (from line 1 to line 3).
+                                                </div>
+                                    </div>
+                        </section>
+
+                        <!-- ================= LESSON 4: ALIGNMENT ================= -->
+                        <section class="lesson" data-lesson="3">
+                                    <div class="lesson-head">
+                                                <h2>4 · Alignment — justify & align</h2>
+                                                <p>Two axes: <code>justify-*</code> = horizontal (inline),
+                                                            <code>align-*</code> = vertical (block).
+                                                            <code>*-items</code> positions content inside cells;
+                                                            <code>*-content</code> positions the whole grid in extra
+                                                            space.</p>
+                                    </div>
+                                    <div class="panel">
+                                                <div class="controls">
+                                                            <div class="ctrl">
+                                                                        <label>justify-items</label>
+                                                                        <select id="ji">
+                                                                                    <option>stretch</option>
+                                                                                    <option>start</option>
+                                                                                    <option>center</option>
+                                                                                    <option>end</option>
+                                                                        </select>
+                                                            </div>
+                                                            <div class="ctrl">
+                                                                        <label>align-items</label>
+                                                                        <select id="ai">
+                                                                                    <option>stretch</option>
+                                                                                    <option>start</option>
+                                                                                    <option>center</option>
+                                                                                    <option>end</option>
+                                                                        </select>
+                                                            </div>
+                                                            <div class="ctrl">
+                                                                        <label>justify-content</label>
+                                                                        <select id="jc">
+                                                                                    <option>start</option>
+                                                                                    <option>center</option>
+                                                                                    <option>end</option>
+                                                                                    <option>space-between</option>
+                                                                                    <option>space-around</option>
+                                                                                    <option>space-evenly</option>
+                                                                        </select>
+                                                            </div>
+                                                            <div class="ctrl">
+                                                                        <label>align-content</label>
+                                                                        <select id="ac">
+                                                                                    <option>start</option>
+                                                                                    <option>center</option>
+                                                                                    <option>end</option>
+                                                                                    <option>space-between</option>
+                                                                                    <option>space-around</option>
+                                                                        </select>
+                                                            </div>
+                                                </div>
+                                                <div class="demo" style="min-height:280px">
+                                                            <div class="grid" id="grid4" style="height:250px"></div>
+                                                </div>
+                                                <pre class="code" id="code4"></pre>
+                                    </div>
+                        </section>
+
+                        <!-- ================= LESSON 5: AUTO-FIT / RESPONSIVE ================= -->
+                        <section class="lesson" data-lesson="4">
+                                    <div class="lesson-head">
+                                                <h2>5 · Responsive Grid — auto-fit & auto-fill</h2>
+                                                <p>The famous one-liner. Resize the container with the slider and watch
+                                                            columns wrap automatically — no media queries needed.</p>
+                                    </div>
+                                    <div class="panel">
+                                                <div class="controls">
+                                                            <div class="ctrl">
+                                                                        <label>Container width: <b
+                                                                                                id="b-width">100</b>%</label>
+                                                                        <input type="range" id="width" min="30"
+                                                                                    max="100" value="100">
+                                                            </div>
+                                                            <div class="ctrl">
+                                                                        <label>Min card width: <b
+                                                                                                id="b-min">140</b>px</label>
+                                                                        <input type="range" id="minw" min="80" max="260"
+                                                                                    value="140">
+                                                            </div>
+                                                            <div class="ctrl">
+                                                                        <label>Mode</label>
+                                                                        <select id="autoMode">
+                                                                                    <option value="auto-fit">auto-fit
+                                                                                    </option>
+                                                                                    <option value="auto-fill">auto-fill
+                                                                                    </option>
+                                                                        </select>
+                                                            </div>
+                                                </div>
+                                                <div class="demo">
+                                                            <div id="widthHolder"
+                                                                        style="margin:0 auto; transition:width .25s;">
+                                                                        <div class="grid" id="grid5"></div>
+                                                            </div>
+                                                </div>
+                                                <pre class="code" id="code5"></pre>
+                                                <div class="note"><b>auto-fit vs auto-fill:</b> when items don't fill
+                                                            the row, <code>auto-fit</code> stretches them to absorb the
+                                                            empty tracks, while <code>auto-fill</code> keeps the empty
+                                                            tracks (items stay their min size). Shrink the width and add
+                                                            items to feel the difference.</div>
+                                    </div>
+                        </section>
+
+                        <!-- ================= LESSON 6: TEMPLATE AREAS ================= -->
+                        <section class="lesson" data-lesson="5">
+                                    <div class="lesson-head">
+                                                <h2>6 · Named Areas — grid-template-areas</h2>
+                                                <p>Draw your layout as ASCII art. Each name maps to an item via
+                                                            <code>grid-area</code>. Best for page layouts. Toggle the
+                                                            mobile layout.</p>
+                                    </div>
+                                    <div class="panel">
+                                                <div class="pill-row">
+                                                            <span class="pill active" data-layout="desktop">Desktop
+                                                                        layout</span>
+                                                            <span class="pill" data-layout="mobile">Mobile layout</span>
+                                                </div>
+                                                <div class="demo">
+                                                            <div class="grid" id="grid6"></div>
+                                                </div>
+                                                <pre class="code" id="code6"></pre>
+                                                <div class="note"><b>Why it's great:</b> rearranging the whole page is
+                                                            as simple as rewriting the <code>grid-template-areas</code>
+                                                            string. The HTML never changes.</div>
+                                    </div>
+                        </section>
+
+                        <!-- ================= LESSON 7: CHEATSHEET ================= -->
+                        <section class="lesson" data-lesson="6">
+                                    <div class="lesson-head">
+                                                <h2>7 · Quick Reference Cheatsheet</h2>
+                                                <p>The properties you'll reach for 90% of the time.</p>
+                                    </div>
+                                    <div class="panel">
+                                                <h3 class="sub">On the container (parent)</h3>
+                                                <table>
+                                                            <tr>
+                                                                        <th>Property</th>
+                                                                        <th>What it does</th>
+                                                            </tr>
+                                                            <tr>
+                                                                        <td><code>display: grid</code></td>
+                                                                        <td>Turns the element into a grid container.
+                                                                        </td>
+                                                            </tr>
+                                                            <tr>
+                                                                        <td><code>grid-template-columns</code></td>
+                                                                        <td>Defines the column tracks, e.g.
+                                                                                    <code>1fr 2fr</code> or
+                                                                                    <code>repeat(3, 1fr)</code>.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                        <td><code>grid-template-rows</code></td>
+                                                                        <td>Defines the row tracks.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                        <td><code>gap</code></td>
+                                                                        <td>Space between tracks (shorthand for
+                                                                                    <code>row-gap column-gap</code>).
+                                                                        </td>
+                                                            </tr>
+                                                            <tr>
+                                                                        <td><code>grid-template-areas</code></td>
+                                                                        <td>Names regions to place items by name.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                        <td><code>justify-items / align-items</code>
+                                                                        </td>
+                                                                        <td>Align cell content horizontally /
+                                                                                    vertically.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                        <td><code>justify-content / align-content</code>
+                                                                        </td>
+                                                                        <td>Align the whole grid within leftover space.
+                                                                        </td>
+                                                            </tr>
+                                                            <tr>
+                                                                        <td><code>grid-auto-flow</code></td>
+                                                                        <td><code>row</code> | <code>column</code> |
+                                                                                    <code>dense</code> — how auto-placed
+                                                                                    items fill gaps.</td>
+                                                            </tr>
+                                                </table>
+                                                <h3 class="sub" style="margin-top:20px">On the items (children)</h3>
+                                                <table>
+                                                            <tr>
+                                                                        <th>Property</th>
+                                                                        <th>What it does</th>
+                                                            </tr>
+                                                            <tr>
+                                                                        <td><code>grid-column</code></td>
+                                                                        <td><code>span 2</code> or <code>1 / 3</code> —
+                                                                                    which columns the item occupies.
+                                                                        </td>
+                                                            </tr>
+                                                            <tr>
+                                                                        <td><code>grid-row</code></td>
+                                                                        <td>Same, for rows.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                        <td><code>grid-area</code></td>
+                                                                        <td>Assign to a named area, or
+                                                                                    <code>row-start / col-start / row-end / col-end</code>.
+                                                                        </td>
+                                                            </tr>
+                                                            <tr>
+                                                                        <td><code>justify-self / align-self</code></td>
+                                                                        <td>Override alignment for a single item.</td>
+                                                            </tr>
+                                                </table>
+                                                <h3 class="sub" style="margin-top:20px">Handy units & functions</h3>
+                                                <table>
+                                                            <tr>
+                                                                        <th>Token</th>
+                                                                        <th>Meaning</th>
+                                                            </tr>
+                                                            <tr>
+                                                                        <td><code>fr</code></td>
+                                                                        <td>A fraction of the remaining free space.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                        <td><code>repeat(n, …)</code></td>
+                                                                        <td>Repeat a track pattern n times.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                        <td><code>minmax(min, max)</code></td>
+                                                                        <td>Track stays between a min and max size.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                        <td><code>auto-fit / auto-fill</code></td>
+                                                                        <td>Auto-create as many tracks as fit — the
+                                                                                    responsive trick.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                        <td><code>min-content / max-content</code></td>
+                                                                        <td>Size to the smallest / largest content.</td>
+                                                            </tr>
+                                                </table>
+                                    </div>
+                        </section>
+
+                        <footer>Built as a teaching aid · Every demo is live — encourage your student to break things.
+                        </footer>
+            </div>
+
+            <script>
+                        /* ---------- Tabs ---------- */
+                        const lessons = [
+                                    "Basics", "Track Sizing", "Spanning", "Alignment", "Responsive", "Named Areas", "Cheatsheet"
+                        ];
+                        const tabsEl = document.getElementById('tabs');
+                        lessons.forEach((name, i) => {
+                                    const b = document.createElement('button');
+                                    b.className = 'tab' + (i === 0 ? ' active' : '');
+                                    b.textContent = (i + 1) + '. ' + name;
+                                    b.onclick = () => {
+                                                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                                                document.querySelectorAll('.lesson').forEach(l => l.classList.remove('active'));
+                                                b.classList.add('active');
+                                                document.querySelector('.lesson[data-lesson="' + i + '"]').classList.add('active');
+                                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                                    };
+                                    tabsEl.appendChild(b);
+                        });
+
+                        /* ---------- helpers ---------- */
+                        function fillItems(grid, n, opts = {}) {
+                                    grid.innerHTML = '';
+                                    for (let i = 1; i <= n; i++) {
+                                                const d = document.createElement('div');
+                                                d.className = 'item';
+                                                d.textContent = i;
+                                                grid.appendChild(d);
+                                    }
+                        }
+                        function hl(s) { // tiny syntax highlighter
+                                    return s
+                                                .replace(/\/\*[^*]*\*\//g, m => '<span class="c">' + m + '</span>')
+                                                .replace(/([\w-]+)(\s*:)/g, '<span class="k">$1</span>$2')
+                                                .replace(/(:\s*)([^;]+)(;)/g, '$1<span class="v">$2</span>$3');
+                        }
+
+                        /* ============ LESSON 1 ============ */
+                        const cols = document.getElementById('cols'), gap = document.getElementById('gap'), count = document.getElementById('count');
+                        const grid1 = document.getElementById('grid1'), code1 = document.getElementById('code1');
+                        function l1() {
+                                    const c = +cols.value, g = +gap.value, n = +count.value;
+                                    document.getElementById('b-cols').textContent = c;
+                                    document.getElementById('b-gap').textContent = g;
+                                    document.getElementById('b-count').textContent = n;
+                                    grid1.style.gridTemplateColumns = `repeat(${c}, 1fr)`;
+                                    grid1.style.gap = g + 'px';
+                                    fillItems(grid1, n);
+                                    code1.innerHTML = hl(`.container {
+  display: grid;
+  grid-template-columns: repeat(${c}, 1fr);
+  gap: ${g}px;
+}`);
+                        }
+                        [cols, gap, count].forEach(e => e.oninput = l1); l1();
+
+                        /* ============ LESSON 2 ============ */
+                        const presets = [
+                                    { label: '1fr 1fr 1fr', val: '1fr 1fr 1fr' },
+                                    { label: '1fr 2fr 1fr', val: '1fr 2fr 1fr' },
+                                    { label: '200px 1fr', val: '200px 1fr' },
+                                    { label: 'auto 1fr auto', val: 'auto 1fr auto' },
+                                    { label: 'minmax(100px,1fr) 2fr', val: 'minmax(100px, 1fr) 2fr' },
+                                    { label: 'repeat(4, 1fr)', val: 'repeat(4, 1fr)' }
+                        ];
+                        const ppEl = document.getElementById('track-presets');
+                        const grid2 = document.getElementById('grid2'), code2 = document.getElementById('code2');
+                        let activePreset = 0;
+                        presets.forEach((p, i) => {
+                                    const s = document.createElement('span');
+                                    s.className = 'pill' + (i === 0 ? ' active' : '');
+                                    s.textContent = p.label;
+                                    s.onclick = () => { activePreset = i; document.querySelectorAll('#track-presets .pill').forEach(x => x.classList.remove('active')); s.classList.add('active'); l2(); };
+                                    ppEl.appendChild(s);
+                        });
+                        function l2() {
+                                    const val = presets[activePreset].val;
+                                    grid2.style.gridTemplateColumns = val;
+                                    grid2.style.gap = '10px';
+                                    fillItems(grid2, 6);
+                                    code2.innerHTML = hl(`.container {
+  display: grid;
+  grid-template-columns: ${val};
+  gap: 10px;
+}`);
+                        }
+                        l2();
+
+                        /* ============ LESSON 3 ============ */
+                        const span = document.getElementById('span'), spanr = document.getElementById('spanr');
+                        const grid3 = document.getElementById('grid3'), code3 = document.getElementById('code3');
+                        function l3() {
+                                    const sc = +span.value, sr = +spanr.value;
+                                    document.getElementById('b-span').textContent = sc;
+                                    document.getElementById('b-spanr').textContent = sr;
+                                    grid3.style.gridTemplateColumns = 'repeat(4, 1fr)';
+                                    grid3.style.gridAutoRows = '56px';
+                                    grid3.style.gap = '10px';
+                                    fillItems(grid3, 8);
+                                    const feat = grid3.children[0];
+                                    feat.classList.add('hot');
+                                    feat.textContent = 'span';
+                                    feat.style.gridColumn = 'span ' + sc;
+                                    feat.style.gridRow = 'span ' + sr;
+                                    code3.innerHTML = hl(`.featured {
+  grid-column: span ${sc};
+  grid-row: span ${sr};
+}`);
+                        }
+                        [span, spanr].forEach(e => e.oninput = l3); l3();
+
+                        /* ============ LESSON 4 ============ */
+                        const ji = document.getElementById('ji'), ai = document.getElementById('ai'), jc = document.getElementById('jc'), ac = document.getElementById('ac');
+                        const grid4 = document.getElementById('grid4'), code4 = document.getElementById('code4');
+                        function l4() {
+                                    grid4.style.gridTemplateColumns = 'repeat(3, 80px)';
+                                    grid4.style.gridTemplateRows = 'repeat(2, 60px)';
+                                    grid4.style.gap = '10px';
+                                    grid4.style.justifyItems = ji.value;
+                                    grid4.style.alignItems = ai.value;
+                                    grid4.style.justifyContent = jc.value;
+                                    grid4.style.alignContent = ac.value;
+                                    fillItems(grid4, 6);
+                                    // make items obviously not stretched so alignment shows
+                                    [...grid4.children].forEach(c => { c.style.width = 'auto'; c.style.height = 'auto'; c.style.padding = '12px 18px'; });
+                                    code4.innerHTML = hl(`.container {
+  display: grid;
+  grid-template-columns: repeat(3, 80px);
+  grid-template-rows: repeat(2, 60px);
+  justify-items: ${ji.value};
+  align-items: ${ai.value};
+  justify-content: ${jc.value};
+  align-content: ${ac.value};
+}`);
+                        }
+                        [ji, ai, jc, ac].forEach(e => e.onchange = l4); l4();
+
+                        /* ============ LESSON 5 ============ */
+                        const width = document.getElementById('width'), minw = document.getElementById('minw'), autoMode = document.getElementById('autoMode');
+                        const grid5 = document.getElementById('grid5'), code5 = document.getElementById('code5'), holder = document.getElementById('widthHolder');
+                        function l5() {
+                                    const w = +width.value, m = +minw.value, mode = autoMode.value;
+                                    document.getElementById('b-width').textContent = w;
+                                    document.getElementById('b-min').textContent = m;
+                                    holder.style.width = w + '%';
+                                    grid5.style.gridTemplateColumns = `repeat(${mode}, minmax(${m}px, 1fr))`;
+                                    grid5.style.gap = '10px';
+                                    fillItems(grid5, 8);
+                                    code5.innerHTML = hl(`.container {
+  display: grid;
+  grid-template-columns: repeat(${mode}, minmax(${m}px, 1fr));
+  gap: 10px;
+}`);
+                        }
+                        [width, minw, autoMode].forEach(e => e.oninput = l5, e => e.onchange = l5);
+                        [width, minw].forEach(e => e.oninput = l5); autoMode.onchange = l5; l5();
+
+                        /* ============ LESSON 6 ============ */
+                        const grid6 = document.getElementById('grid6'), code6 = document.getElementById('code6');
+                        let layout = 'desktop';
+                        document.querySelectorAll('[data-layout]').forEach(p => {
+                                    p.onclick = () => { layout = p.dataset.layout; document.querySelectorAll('[data-layout]').forEach(x => x.classList.remove('active')); p.classList.add('active'); l6(); };
+                        });
+                        function l6() {
+                                    grid6.innerHTML = '';
+                                    const areas = ['header', 'sidebar', 'content', 'footer'];
+                                    const labels = { header: 'Header', sidebar: 'Sidebar', content: 'Main Content', footer: 'Footer' };
+                                    areas.forEach(a => {
+                                                const d = document.createElement('div');
+                                                d.className = 'item'; d.style.minHeight = '60px';
+                                                d.textContent = labels[a];
+                                                d.style.gridArea = a;
+                                                if (a === 'header' || a === 'content') d.classList.add('hot');
+                                                grid6.appendChild(d);
+                                    });
+                                    let templ, colDef;
+                                    if (layout === 'desktop') {
+                                                templ = `"header  header"
+                     "sidebar content"
+                     "footer  footer"`;
+                                                colDef = '200px 1fr';
+                                                grid6.style.gridTemplateColumns = '200px 1fr';
+                                                grid6.style.gridTemplateAreas = '"header header" "sidebar content" "footer footer"';
+                                    } else {
+                                                templ = `"header"
+                     "content"
+                     "sidebar"
+                     "footer"`;
+                                                colDef = '1fr';
+                                                grid6.style.gridTemplateColumns = '1fr';
+                                                grid6.style.gridTemplateAreas = '"header" "content" "sidebar" "footer"';
+                                    }
+                                    grid6.style.gap = '10px';
+                                    code6.innerHTML = hl(`.container {
+  display: grid;
+  grid-template-columns: ${colDef};
+  grid-template-areas:
+    ${templ.trim()};
+  gap: 10px;
+}
+.header  { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.content { grid-area: content; }
+.footer  { grid-area: footer; }`);
+                        }
+                        l6();
+            </script>
+</body>
+
+</html>
